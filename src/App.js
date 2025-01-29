@@ -8,11 +8,13 @@ import Login from "./pages/Login";
 import Register from "./pages/Register";
 import ResetPassword from "./pages/Reset-Password";
 import DashBoard from "./pages/DashBoard";
+import AuthenticationPage from "./pages/Auth";
 
 // Define Routes
 const routes = [
   {
     path: "/",
+    element: <AuthenticationPage />,
     children: [
       { index: true, element: <Login /> },
       { path: "register", element: <Register /> },
