@@ -12,6 +12,7 @@ const theme = createTheme({
             backgroundColor: 'white',  // Custom background for all Card components
             boxShadow: `none`,
             width: 344,
+            height: `100vh`,
             display: 'flex',
             justifyContent: 'center', // Centers horizontally
             alignItems: 'center',      // Centers vertically
@@ -55,9 +56,18 @@ const theme = createTheme({
             fontWeight: 600, // Adjust font weight for all FormLabel components
           },
         },
-      },
-    },
-  });
+      }},
+  typography: {
+    h1: {
+        width: 303,
+        heigh: 38,
+        fontSize: 28,
+        fontWeight: 600,
+        marginBottom: 3,
+        color: `#1A1C1F`,
+    }
+  }},
+);
   
 export default function AuthenticationPage() {
 

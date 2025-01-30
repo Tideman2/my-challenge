@@ -3,9 +3,8 @@ import React from "react";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "./reduxStore/store"; // Import your Redux store
-
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Login, { loginAction } from "./pages/Login";
+import Register, { registerAction } from "./pages/Register";
 import ResetPassword from "./pages/Reset-Password";
 import DashBoard from "./pages/DashBoard";
 import AuthenticationPage from "./pages/Auth";
@@ -16,13 +15,13 @@ const routes = [
     path: "/",
     element: <AuthenticationPage />,
     children: [
-      { index: true, element: <Login /> },
-      { path: "register", element: <Register /> },
+      { index: true, element: <Login />, action: loginAction},
+      { path: "register", element: <Register />, action: registerAction},
       { path: "reset-password", element: <ResetPassword /> },
     ],
   },
   {
-    path: "/dashboard",
+    path: "/dashBoard",
     element: <DashBoard />,
   },
 ];
