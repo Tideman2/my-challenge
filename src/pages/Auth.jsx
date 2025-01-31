@@ -54,6 +54,9 @@ const theme = createTheme({
         styleOverrides: {
           root: {
             fontWeight: 600, // Adjust font weight for all FormLabel components
+            fontSize: 13,
+            width: 90,
+            height: 20
           },
         },
       }},
