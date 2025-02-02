@@ -1,20 +1,21 @@
 //gh GH "" || @
 import { useState } from "react";
 import { Card, CardContent, FormHelperText, Button, Typography, TextField, FormControl,
-    FormLabel, InputAdornment, Box,
+    FormLabel, InputAdornment, Box, styled
   } from "@mui/material";
+import { Link, Form, redirect, useFetcher } from "react-router-dom";
 
-// import { Form } from "react-router-dom"
 import { useSelector, useDispatch } from "react-redux";
-import { updateEmail, updatePassword, autenticate } from "../reduxStore/features/auth";
-
-import { Link, Form, redirect } from "react-router-dom";
+import { updateEmail, updatePassword } from "../reduxStore/features/auth";
 
 export default function Login() {
  let [emailError, setEmailError] = useState(false);
+ let [emailErrorMessage, setEmailErrorMessage] = useState(``);
+ let [passWordErrorMessage, setPasswordErrorMesssage] = useState(``);
  let [passWordError, setPasswordError] = useState(false);
  let [showPassword, setShowPassword] = useState(false);
- let dispatch = useDispatch();
+ const dispatch = useDispatch();
+ const fetcher = useFetcher();
 
  //user email from redux store
  let userEmail = useSelector((state) => {return state.auth.user.email})
@@ -22,48 +23,76 @@ export default function Login() {
  //user password from redux store
  let userPassword = useSelector((state) => {return state.auth.user.password})
 
-
   // Email validation function
-  function validateEmail(e) {
-    let email = e.target.value.trim();
-    //update email in redux
-    console.log(email);
+  function validateEmail() {
+    let email = userEmail
+    console.log(email)
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    setEmailError(!emailRegex.test(email)); // Set error if email is invalid
+   if(email.length === 0) {
+      setEmailError(true)//set error if string is empty
+      setEmailErrorMessage(`Input must not be empty`)
+      return false // if it isnt validated
+    }else if(!emailRegex.test(email)) {
+      setEmailError(true) // Set error if email is invalid
+      setEmailErrorMessage(`Pls input a valid email`)
+      return false //if it isnt validated
+    }
+  return true // if it reaches here then it is validated
   }
-
-
 
 //  Password validation function
-function validatePassword(e) {
-    let pass = e.target.value;
+function validatePassword() {
+    let pass = userPassword
     console.log(pass)
-    setPasswordError(pass.length < 8);
+    if(pass.length === 0) {
+      setPasswordError(true)//set error if pass is empty
+      setPasswordErrorMesssage(`Input must not be empty`)
+      return false // if it isnt validated
+    }else if(pass.length  <= 7) {
+      setPasswordError(true) // Set error if email is invalid
+      setPasswordErrorMesssage(`Password must be more than 7 digits`)
+      return false // if it isnt validated
+    }
+    return true // if it reaches here then it is validated
   }
 
+  //Form submit function
+  function handleSubmit(event) {
+    event.preventDefault()
+    
+    if(validateEmail() && validatePassword()) {
+      const formData = new FormData(event.target);
+      fetcher.submit(formData, {method: `post`, action: `/login`})
+      alert(`form successfully submitted`)
+    }else {
+      alert(`form submission failed`)
+    }
+  }
+  
+
     return (
-        <Card>
+        <LoginCard>
             <CardContent>
             <Typography variant="h1">Log into your account</Typography>
-               <Form method="post">
+               <Form onSubmit={handleSubmit}>
                 {/* form control for email input */}
                 <FormControl error= {emailError} sx={{ mb: 2, mt: 2 }}>
-                    <FormLabel>
+                    <LoginLabel>
                     Email address
-                    </FormLabel>
+                    </LoginLabel>
                     <TextField variant="outlined" 
                     name="email"
                     onChange={(e) => {dispatch(updateEmail({email: e.target.value}))}} 
                     value={userEmail?? ``}
                     onBlur={validateEmail}/>
-                {emailError && <FormHelperText sx={{color: `red`}}>Input a valid email</FormHelperText>}
+                {emailError && <FormHelperText sx={{color: `red`}}>{emailErrorMessage}</FormHelperText>}
                 </FormControl>
 
                 {/* form control for password input */}
                 <FormControl error= {passWordError} sx={{ mb: 2 }}>
-                    <FormLabel>
+                    <LoginLabel>
                     Password
-                    </FormLabel>
+                    </LoginLabel>
                     <TextField variant="outlined"
                      type={showPassword? `text`: `password`}
                      name="password"
@@ -88,12 +117,12 @@ function validatePassword(e) {
                           </InputAdornment>
                         ),
                       }}/>
-                {passWordError && <FormHelperText sx={{color: `red`}}>digits must be higher than 7</FormHelperText>}
+                {passWordError && <FormHelperText sx={{color: `red`}}>{passWordErrorMessage}</FormHelperText>}
                 </FormControl>
 
-                <Button type="submit" sx={{
+                <LoginButton type="submit" sx={{
                 marginTop: 3,
-               }}>Log in</Button>
+               }}>Log in</LoginButton>
                </Form>
             
              <Box sx={{
@@ -105,14 +134,13 @@ function validatePassword(e) {
                 <Typography sx={{
                     fontWeight: 400,
                     fontSize: 12,
-                    width: 134,
                     height: 22,
+                    marginRight: 1 
                 }}>
                     Forgot your password? 
                 </Typography>
-                <Link to={`reset-password`} style={{ textDecoration: "none" }}>
+                <Link to={`/reset-password`} style={{ textDecoration: "none" }}>
                  <Typography  sx={{
-                    width: 73,
                     height: 22,
                     fontWeight: 400,
                     fontSize: 12,
@@ -123,9 +151,40 @@ function validatePassword(e) {
                 </Link>
              </Box>
             </CardContent>
-        </Card>
+        </LoginCard>
     )
 }
+
+let LoginCard = styled(Card)(() => {
+  return {
+    backgroundColor: 'white',  // Custom background for all Card components
+    boxShadow: `none`,
+    width: 344,
+    height: `100vh`,
+    display: 'flex',
+    justifyContent: 'center', // Centers horizontally
+    alignItems: 'center',      // Centers vertically
+    margin: '0 auto',   
+  }
+})
+
+let LoginLabel = styled(FormLabel)(() => {
+  return {
+    fontWeight: 600, // Adjust font weight for all FormLabel components
+    fontSize: 13,
+    height: 20
+  }
+});
+
+let LoginButton = styled(Button)(() => {
+  return {
+    width: 344,
+    backgroundColor: `#4A72A3`,
+    textTransform: `none`,
+    color: `white`,
+    height: 48,
+  }
+})
 
 
 //route action to simulate user login
@@ -155,7 +214,7 @@ export async function loginAction({ request }) {
     alert("Successfully logged in");
     return redirect("/dashboard");
   } else {
-     alert(`Account does not exist but you can pass`)
-    return redirect("register");
+     alert(`Account does not exist, create one`)
+    return redirect("/register");
   }
 }

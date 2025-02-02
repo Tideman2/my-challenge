@@ -1,28 +1,34 @@
 //gh GH "" || @
 import React from "react";
+import { theme } from "./config/theme";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ThemeProvider } from '@mui/material';
 import { Provider } from "react-redux";
 import store from "./reduxStore/store"; // Import your Redux store
+
 import Login, { loginAction } from "./pages/Login";
 import Register, { registerAction } from "./pages/Register";
 import ResetPassword from "./pages/Reset-Password";
-import DashBoard from "./pages/DashBoard";
-import AuthenticationPage from "./pages/Auth";
+import MenuNav from "./pages/MenuNav";
+import AuthenticationLayout from "./components/layout/AutenticationLayout";
 
 // Define Routes
 const routes = [
   {
-    path: "/",
-    element: <AuthenticationPage />,
+    element: <AuthenticationLayout />,
     children: [
-      { index: true, element: <Login />, action: loginAction},
-      { path: "register", element: <Register />, action: registerAction},
-      { path: "reset-password", element: <ResetPassword /> },
+      { path: "/me", element: <redirect to="/login" replace = {true}/>},
+      { path: "/login", element: <Login />, action: loginAction},
+      { path: "/register", element: <Register />, action: registerAction},
+      { path: "/reset-password", element: <ResetPassword /> },
     ],
   },
   {
-    path: "/dashBoard",
-    element: <DashBoard />,
+    path: "dashBoard",
+    element: <MenuNav />,
+    children: [
+       
+    ],
   },
 ];
 
@@ -31,7 +37,9 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <RouterProvider router={router} />
+      <ThemeProvider theme={theme}>
+       <RouterProvider router={router} />
+      </ThemeProvider>
     </Provider>
   );
 };

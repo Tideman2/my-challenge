@@ -32,7 +32,7 @@ export default function ResetPassword() {
          </FormControl>
            <Button>Continue</Button>
         </Form>
-        <Link to={`..`} style={{ textDecoration: "none",}}>
+        <Link to={`/login`} style={{ textDecoration: "none",}}>
                  <Typography  sx={{
                     display:`block`,
                     width: `100%`,

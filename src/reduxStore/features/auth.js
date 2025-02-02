@@ -3,8 +3,8 @@ let authSlice = createSlice({
     name: `auth`,
     initialState: {
         user: {
-            email: null,
-            password: null
+            email: ``,
+            password: ``
         },
         isAutenticated: false
     },

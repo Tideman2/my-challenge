@@ -1,5 +1,5 @@
 import { Form, redirect } from "react-router-dom"
-import { FormControl, FormHelperText, TextField, Typography, Card, CardContent, Button, FormLabel } from "@mui/material"
+import { FormControl, TextField, Typography, Card, CardContent, Button, FormLabel } from "@mui/material"
 
 //gh
 export default function Register() {
