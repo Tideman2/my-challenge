@@ -3,6 +3,7 @@ import OTPInput from "react-otp-input";
 import { useState } from "react";
 
 import smsIcon from "../../../assets/img/sms-notification.png";
+import OtpCounter from "../../../components/OtpCounter";
 
 let LoginCard = styled(Card)(({ theme }) => {
   return {
@@ -49,8 +50,9 @@ let CircleRoundLogo = styled(Box)(() => {
   };
 });
 
-export default function VerifyOtp({setVerified}) {
-  let [otp, setOtp] = useState(null);
+export default function VerifyOtp({ setVerified }) {
+  let [otp, setOtp] = useState("");
+  let [otpInputError, setOtpInputError] = useState(false);
 
   return (
     <LoginCard>
@@ -87,10 +89,14 @@ export default function VerifyOtp({setVerified}) {
           <OTPInput
             numInputs={4}
             value={otp}
-            onChange={setOtp}
+            // inputType= "number"
+            onChange={(value) => {
+              setOtp(value);
+              setOtpInputError(value.split("").some((char) => isNaN(char)));
+            }}
             renderInput={(inputProps, index) => (
               <input
-                {...inputProps} // Spread inputProps (ensures functionality)
+                {...inputProps}
                 style={{
                   width: "50px",
                   height: "50px",
@@ -98,13 +104,28 @@ export default function VerifyOtp({setVerified}) {
                   textAlign: "center",
                   borderRadius: "4px",
                   marginRight: "5px",
-                  borderColor: "#2D75B6",
-                  boxShadow: `none`,
-                  // Custom border for input 3
+                  border: `1px solid ${otpInputError ? "red" : "#2D75B6"}`,
+                  outline: "none",
                 }}
               />
             )}
           />
+
+          {otpInputError && (
+            <Box display={"flex"} justifyContent={"center"}>
+              <Typography
+                variant="subtitle"
+                sx={{
+                  color: "red",
+                  fontSize: 10,
+                  textAlign: "center",
+                  mt: 1,
+                }}
+              >
+                Otp can only be a number
+              </Typography>
+            </Box>
+          )}
         </Box>
         <Button
           variant="contained"
@@ -113,21 +134,40 @@ export default function VerifyOtp({setVerified}) {
             height: 48,
             borderRadius: 1,
           }}
-          onClick={() => {setVerified()}}
+          onClick={() => {
+            setVerified(true);
+          }}
         >
           verify
         </Button>
 
-        <Box>
+        <Box
+          display={"flex"}
+          width={"100%"}
+          justifyContent={"center"}
+          alignItems={"center"}
+        >
           <Typography
-          
             sx={{
-              textAlign: "center",
               fontSize: 12,
+              marginRight: 0.5,
             }}
           >
-            Didn't recieve an OTP yet
+            Didn't recieve an OTP yet?
           </Typography>
+          <Box display={"flex"}>
+            <Typography
+              variant="subtitle"
+              marginRight={0.5}
+              color="#2D75B6"
+              fontSize={12}
+            >
+              Resend
+            </Typography>
+            <span>
+              <OtpCounter />
+            </span>
+          </Box>
         </Box>
       </Box>
     </LoginCard>

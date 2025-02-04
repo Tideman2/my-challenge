@@ -1,8 +1,8 @@
-import { Outlet } from "react-router-dom"
-import { AppBar, Box, styled } from "@mui/material"
+import { Outlet } from "react-router-dom";
+import { AppBar, Box, styled } from "@mui/material";
 //gh GH "" || @
 
-import logo from "../../assets/img/logo_gzxyo7 2.png" 
+import logo from "../../assets/img/logo_gzxyo7 2.png";
   
 export default function AuthenticationLayout() {
       

@@ -1,4 +1,3 @@
-//gh GH "" || @
 import React from "react";
 import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import { ThemeProvider } from '@mui/material';
@@ -20,7 +19,7 @@ const routes = [
     element: <AuthenticationLayout />,
     children: [
       { path: "/login", element: <Login />, action: loginAction},
-      { path: "/collaborate", elemt: <Collaborate />, action: collaborateAction},
+      { path: "/collaborate", element: <Collaborate />, action: collaborateAction},
       { path: "/forgot-password", element: <ForgotPassword /> },
       { path: "/reset-password", element: <ResetPassword />},
       { path: "*", element: <Navigate to="/login" replace = {true}/>},

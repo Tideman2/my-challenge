@@ -2,7 +2,6 @@ import { Card, CardContent, Typography, Button, styled } from "@mui/material";
 import { useState } from "react";
 import { Form, Link } from "react-router-dom";
 
-//gh GH "" || @
 import InputComponent from "../components/InputComponent";
 
 let LoginCard = styled(Card)(({ theme }) => {
