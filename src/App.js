@@ -1,30 +1,33 @@
 //gh GH "" || @
 import React from "react";
-import { theme } from "./config/theme";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
 import { ThemeProvider } from '@mui/material';
 import { Provider } from "react-redux";
-import store from "./reduxStore/store"; // Import your Redux store
 
-import Login, { loginAction } from "./pages/Login";
-import Register, { registerAction } from "./pages/Register";
-import ResetPassword from "./pages/Reset-Password";
+import store from "./reduxStore/store"; // Import your Redux store
+import Login, { loginAction } from "./pages/Login"; 
+import Collaborate, {collaborateAction} from "./pages/Collaborate";
+import ForgotPassword from "./pages/Forgot-Password";
+import ResetPassword from "./pages/Reset-Password/Reset-Password";
 import MenuNav from "./pages/MenuNav";
 import AuthenticationLayout from "./components/layout/AutenticationLayout";
+import { theme } from "./config/theme";
 
-// Define Routes
+
+
 const routes = [
   {
     element: <AuthenticationLayout />,
     children: [
-      { path: "/me", element: <redirect to="/login" replace = {true}/>},
       { path: "/login", element: <Login />, action: loginAction},
-      { path: "/register", element: <Register />, action: registerAction},
-      { path: "/reset-password", element: <ResetPassword /> },
+      { path: "/collaborate", elemt: <Collaborate />, action: collaborateAction},
+      { path: "/forgot-password", element: <ForgotPassword /> },
+      { path: "/reset-password", element: <ResetPassword />},
+      { path: "*", element: <Navigate to="/login" replace = {true}/>},
     ],
   },
   {
-    path: "dashBoard",
+    path: "/dashBoard",
     element: <MenuNav />,
     children: [
        
@@ -45,4 +48,4 @@ const App = () => {
 };
 
 export default App;
-
+                                                                                                                                                                                                      

@@ -4,15 +4,6 @@ let fontFamily = `BR Firma, sans-serif`
 export const theme = createTheme({
     components: {
       // Override the default Card component styles
-      MuiCard: {
-      },
-      MuiButton: {
-        styleOverrides: {
-          root: {
-            fontFamily,
-          }
-        }
-      },
       MuiTextField: {
         styleOverrides: {
           root: {
@@ -40,7 +31,7 @@ export const theme = createTheme({
         heigh: 38,
         fontSize: 28,
         fontWeight: 600,
-        marginBottom: 3,
+        marginBottom: 5,
         color: `#1A1C1F`,
     },
   },
