@@ -1,26 +1,49 @@
-import logo from './logo.svg';
-import './App.css';
-//gh GH "" || @
+import React from "react";
+import { createBrowserRouter, RouterProvider, Navigate } from "react-router-dom";
+import { ThemeProvider } from '@mui/material';
+import { Provider } from "react-redux";
 
-function App() {
+import store from "./reduxStore/store"; // Import your Redux store
+import Login, { loginAction } from "./pages/Login"; 
+import Collaborate, {collaborateAction} from "./pages/Collaborate";
+import ForgotPassword from "./pages/Forgot-Password";
+import ResetPassword from "./pages/Reset-Password/Reset-Password";
+import AuthenticationLayout from "./components/layout/AutenticationLayout";
+import DashboardLayout from "./components/layout/DashboardLayout/DashboardLayout";
+import { theme } from "./config/theme";
+
+
+const routes = [
+  {
+    element: <AuthenticationLayout />,
+    children: [
+      { path: "/login", element: <Login />, action: loginAction},
+      { path: "/collaborate", element: <Collaborate />, action: collaborateAction},
+      { path: "/forgot-password", element: <ForgotPassword /> },
+      { path: "/reset-password", element: <ResetPassword />},
+      { path: "*", element: <Navigate to="/login" replace = {true}/>},
+    ],
+  },
+  {
+    path: "/dashBoard",
+    element: <DashboardLayout />,
+    children: [
+       
+    ],
+  },
+];
+
+const App = () => {
+  const router = createBrowserRouter(routes);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <ThemeProvider theme={theme}>
+       <RouterProvider router={router} />
+      </ThemeProvider>
+    </Provider>
   );
-}
+};
 
 export default App;
+                                                                                                                                                                                                      
