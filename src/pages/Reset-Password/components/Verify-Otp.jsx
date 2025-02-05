@@ -3,7 +3,7 @@ import OTPInput from "react-otp-input";
 import { useState } from "react";
 
 import smsIcon from "../../../assets/img/sms-notification.png";
-import OtpCounter from "../../../components/OtpCounter";
+import OtpCounter from "./OtpCounter";
 
 let LoginCard = styled(Card)(({ theme }) => {
   return {
@@ -155,7 +155,7 @@ export default function VerifyOtp({ setVerified }) {
           >
             Didn't recieve an OTP yet?
           </Typography>
-          <Box display={"flex"}>
+          <Box display={"flex"} alignItems={"center"}>
             <Typography
               variant="subtitle"
               marginRight={0.5}
@@ -164,9 +164,9 @@ export default function VerifyOtp({ setVerified }) {
             >
               Resend
             </Typography>
-            <span>
-              <OtpCounter />
-            </span>
+            <Box display={"flex"} alignItems={"center"}>
+              (<OtpCounter />)
+            </Box>
           </Box>
         </Box>
       </Box>

@@ -1,11 +1,13 @@
-import { AppBar, Box, Drawer } from "@mui/material";
-import GridViewIcon from "@mui/icons-material/GridView";
-import NavLinks from "../components/NavLinks";
+import { AppBar, Box, Drawer, Container } from "@mui/material";
 import { Outlet } from "react-router-dom";
+import GridViewIcon from "@mui/icons-material/GridView";
 
-const MenuNav = () => {
+import NavLinks from "./components/NavLinks";
+
+export default function DashboardLayout() {
+
   return (
-    <>
+    <Container>
       <AppBar
         position="static"
         sx={{ backgroundColor: `white`, boxShadow: `none` }}
@@ -43,8 +45,6 @@ const MenuNav = () => {
       <Box sx={{ marginLeft: "260px", paddingLeft: 2 }}>
         <Outlet />
       </Box>
-    </>
+    </Container>
   );
-};
-
-export default MenuNav;
+}

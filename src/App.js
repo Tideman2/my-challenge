@@ -8,10 +8,9 @@ import Login, { loginAction } from "./pages/Login";
 import Collaborate, {collaborateAction} from "./pages/Collaborate";
 import ForgotPassword from "./pages/Forgot-Password";
 import ResetPassword from "./pages/Reset-Password/Reset-Password";
-import MenuNav from "./pages/MenuNav";
 import AuthenticationLayout from "./components/layout/AutenticationLayout";
+import DashboardLayout from "./components/layout/DashboardLayout/DashboardLayout";
 import { theme } from "./config/theme";
-
 
 
 const routes = [
@@ -27,7 +26,7 @@ const routes = [
   },
   {
     path: "/dashBoard",
-    element: <MenuNav />,
+    element: <DashboardLayout />,
     children: [
        
     ],

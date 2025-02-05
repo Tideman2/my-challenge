@@ -12,7 +12,6 @@ import {
 import InputComponent from "../components/InputComponent";
 
 
-
 let LoginCard = styled(Card)(({ theme }) => {
   return {
     backgroundColor: theme.palette.background.default, // Custom background for all Card components
