@@ -1,21 +1,20 @@
-import {  Typography, IconButton } from "@mui/material";
+import { Typography, Box } from "@mui/material";
+import { NavLink } from "react-router-dom";
 
+import styles from "./navlinkstyle.module.css";
 
-
-function NavLinks({iconView, title, callback}) {
-
-     return (
-        <IconButton sx={{
-            width: `100%`,
-            backgroundColor: `#4A72A3`,
-            color: `white`,
-            borderRadius: 0,
-            "&:hover": { backgroundColor: "#4A72A3" },
-          }} onClick={callback}>
-             {iconView}
-             <Typography sx={{marginLeft: 2}}>{title}</Typography>
-          </IconButton>
-     )
+function NavLinks({ iconView, title, toUrl, ...rests }) {
+  return (
+    <NavLink
+      {...rests}
+      to={toUrl}
+      end
+      className={({ isActive }) => (isActive ? styles.activeLink : styles.inactiveLink)}
+    >
+      <Box sx={{ marginLeft: 3 }}>{iconView}</Box>
+      <Typography sx={{ marginLeft: 2, fontSize: 14 }}>{title}</Typography>
+    </NavLink>
+  );
 }
 
-export default NavLinks
+export default NavLinks;

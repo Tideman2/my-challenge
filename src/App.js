@@ -11,6 +11,12 @@ import ResetPassword from "./pages/Reset-Password/Reset-Password";
 import AuthenticationLayout from "./components/layout/AutenticationLayout";
 import DashboardLayout from "./components/layout/DashboardLayout/DashboardLayout";
 import { theme } from "./config/theme";
+import Transaction from "./pages/Transaction/Transaction";
+import ActivityLog from "./pages/Activity-log/ActivityLog";
+import Settings from "./pages/Settings/Settings";
+import Administration from "./pages/Administration/Administation";
+import Businesses from "./pages/Businesses/Businesses";
+import Board from "./pages/Board";
 
 
 const routes = [
@@ -28,7 +34,13 @@ const routes = [
     path: "/dashBoard",
     element: <DashboardLayout />,
     children: [
-       
+       {path: "/dashBoard", element: <Board /> },
+       {path: "/dashBoard/transactions", element: <Transaction /> },
+       {path: "/dashBoard/businesses", element: <Businesses /> },
+       {path: "/dashBoard/administration", element: <Administration /> },
+       {path: "/dashBoard/activity-log", element: <ActivityLog /> },
+       {path: "/dashBoard/setting", element: <Settings /> },
+       { path: "*", element: <Navigate to="/dashBoard" replace = {true}/>},
     ],
   },
 ];
