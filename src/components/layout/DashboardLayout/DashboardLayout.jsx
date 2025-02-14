@@ -8,16 +8,19 @@ import businessIcon from "../../../assets/img/graph.png";
 import administrationIcon from "../../../assets/img/personalcard.png";
 import activityLogIcon from "../../../assets/img/menu-board.png";
 import NavLinks from "./components/NavLinks";
+import settingsIcon from "../../../assets/img/setting-2.png";
+import logOutIcon from "../../../assets/img/login.png";
 
 const NavLinkDrawer = styled(Drawer)({
   flexShrink: 0,
   "& .MuiDrawer-paper": {
     width: 260,
-    height: "100vh", // Adjusted height to full screen
+    height: "1024px", // Fixed height
     backgroundColor: "#F9FAFA",
     display: "flex",
     flexDirection: "column",
     paddingTop: "30px",
+    overflow: "hidden", // Prevent scrolling
   },
 });
 
@@ -36,12 +39,10 @@ const LogoBox = styled(Box)(() => {
 const NavLinksBox = styled(Box)(() => {
   return {
     width: 215,
-    height: 561,
-    display: "fles",
+    height: "fit-content",
+    display: "flex",
     flexDirection: "column",
     alignSelf: "center",
-    paddingRight: "5px",
-    marginTop: "45px",
   };
 });
 
@@ -54,18 +55,30 @@ const LinkIconBox = styled(Box)(() => {
 
 export default function DashboardLayout() {
   return (
-    <Container>
+    <Container
+      sx={{
+        margin: "0px",
+        padding: "0px",
+        minHeight: "100vh"
+      }}
+    >
       <NavLinkDrawer variant="permanent">
         <LogoBox>
           <img src={logo} alt="Logo" width="100%" />
         </LogoBox>
-        <NavLinksBox>
+        <NavLinksBox
+          sx={{
+            mb: "70px",
+            mt: "45px"
+          }}
+        >
           {/* Icon Button for DashBoard */}
           <Box sx={{ width: "100%" }}>
             <NavLinks
               iconView={<GridViewIcon />}
               toUrl={"/dashBoard"}
               title="DashBoard"
+              end
             />
             <NavLinks
               iconView={
@@ -81,43 +94,59 @@ export default function DashboardLayout() {
               title="Transactions"
             />
             <NavLinks
-             iconView={
-              <LinkIconBox>
-                <img
-                  src={businessIcon}
-                  alt="businessIcon"
-                  width="100%"
-                />
-              </LinkIconBox>
-            }
+              iconView={
+                <LinkIconBox>
+                  <img src={businessIcon} alt="businessIcon" width="100%" />
+                </LinkIconBox>
+              }
               toUrl={"/dashBoard/businesses"}
               title="Businesses"
             />
             <NavLinks
-             iconView={
-              <LinkIconBox>
-                <img
-                  src={administrationIcon}
-                  alt="administrationIcon"
-                  width="100%"
-                />
-              </LinkIconBox>
-            }
+              iconView={
+                <LinkIconBox>
+                  <img
+                    src={administrationIcon}
+                    alt="administrationIcon"
+                    width="100%"
+                  />
+                </LinkIconBox>
+              }
               toUrl={"/dashBoard/administration"}
-              title="Administration >"
+              title="Administration"
+              menuItems={["Team mates", "Roles and privileges"]}
             />
             <NavLinks
-             iconView={
-              <LinkIconBox>
-                <img
-                  src={activityLogIcon}
-                  alt="activityLog"
-                  width="100%"
-                />
-              </LinkIconBox>
-            }
+              iconView={
+                <LinkIconBox>
+                  <img src={activityLogIcon} alt="activityLog" width="100%" />
+                </LinkIconBox>
+              }
               toUrl={"/dashBoard/activity-log"}
               title="Activity log"
+            />
+          </Box>
+        </NavLinksBox>
+        <hr style={{ width: "100vw", fontWeight: "lighter" }} />
+        <NavLinksBox>
+          <Box>
+            <NavLinks
+              iconView={
+                <LinkIconBox>
+                  <img src={settingsIcon} alt="settingsIcon" width="100%" />
+                </LinkIconBox>
+              }
+              toUrl={"/dashBoard/setting"}
+              title={"Settings"}
+            />
+            <NavLinks
+              iconView={
+                <LinkIconBox>
+                  <img src={logOutIcon} alt="logoutIcon" width="100%" />
+                </LinkIconBox>
+              }
+              toUrl={"dashBoard/activity-log"}
+              title={"Logout"}
             />
           </Box>
         </NavLinksBox>

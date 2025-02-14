@@ -22,3 +22,10 @@
     transition: background-color 0.3s ease;
   }
   
+  .activeMenu {
+    color: #2D75B6;
+  }
+
+  .inactiveMenu {
+    color: #50555E;
+  }
