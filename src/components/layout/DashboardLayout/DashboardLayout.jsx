@@ -2,25 +2,27 @@ import { Box, Drawer, Container, Typography, styled } from "@mui/material";
 import { Outlet } from "react-router-dom";
 import GridViewIcon from "@mui/icons-material/GridView";
 
-import logo from "../../../assets/img/logo_gzxyo7 2.png";
-import transactionIcon from "../../../assets/img/transactionicon.png";
-import businessIcon from "../../../assets/img/graph.png";
+import TopLogo from "../../../assets/svgs/TopLogo";
 import administrationIcon from "../../../assets/img/personalcard.png";
-import activityLogIcon from "../../../assets/img/menu-board.png";
 import NavLinks from "./components/NavLinks";
-import settingsIcon from "../../../assets/img/setting-2.png";
-import logOutIcon from "../../../assets/img/login.png";
+import TransactionIcon from "../../../assets/svgs/TransactionIcon";
+import BusinessIcon from "../../../assets/svgs/BusinessIcon";
+import SettiingsIcon from "../../../assets/svgs/SettingsIcon";
+import LogOutIcon from "../../../assets/svgs/LogOutIcon";
+import ActivityLogIcon from "../../../assets/svgs/ActivityLogIcon";
+import AdminNameIcon from "../../../assets/svgs/AdminNameIcon";
+import DropDownArrowIcon from "../../../assets/svgs/DropDownArrowIcon";
 
 const NavLinkDrawer = styled(Drawer)({
   flexShrink: 0,
   "& .MuiDrawer-paper": {
     width: 260,
-    height: "1024px", // Fixed height
+    height: "100%", // Fixed height
     backgroundColor: "#F9FAFA",
     display: "flex",
     flexDirection: "column",
     paddingTop: "30px",
-    overflow: "hidden", // Prevent scrolling
+    overflow: "hidden",
   },
 });
 
@@ -53,57 +55,65 @@ const LinkIconBox = styled(Box)(() => {
   };
 });
 
+const AdminIconBox = styled(Box)(() => {
+  return {
+    width: "100%",
+    height: "82px",
+    display: "flex",
+    justifyContent: "end",
+    alignItems: "center",
+    borderBottom: "0.4px solid lightgray", 
+  };
+});
+
+
 export default function DashboardLayout() {
   return (
     <Container
       sx={{
         margin: "0px",
         padding: "0px",
-        minHeight: "100vh"
+        display: "flex", // Flex layout to handle sidebar + content
       }}
+      maxWidth={false}
     >
-      <NavLinkDrawer variant="permanent">
+      <NavLinkDrawer variant="permanent" margin= "0px">
         <LogoBox>
-          <img src={logo} alt="Logo" width="100%" />
+          <TopLogo style={{ width: "100%", height: "100%" }} />
         </LogoBox>
         <NavLinksBox
           sx={{
             mb: "70px",
-            mt: "45px"
+            mt: "45px",
           }}
         >
           {/* Icon Button for DashBoard */}
-          <Box sx={{ width: "100%" }}>
+          <Box
+            sx={{
+              width: "100%",
+              gap: "10px",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
             <NavLinks
-              iconView={<GridViewIcon />}
-              toUrl={"/dashBoard"}
+              icon={<GridViewIcon />}
+              path={"/dashBoard"}
               title="DashBoard"
               end
             />
             <NavLinks
-              iconView={
-                <LinkIconBox>
-                  <img
-                    src={transactionIcon}
-                    alt="transactionIcon"
-                    width="100%"
-                  />
-                </LinkIconBox>
-              }
-              toUrl={"/dashBoard/transactions"}
+              icon={<TransactionIcon />}
+              path={"/dashBoard/transactions"}
               title="Transactions"
             />
             <NavLinks
-              iconView={
-                <LinkIconBox>
-                  <img src={businessIcon} alt="businessIcon" width="100%" />
-                </LinkIconBox>
-              }
-              toUrl={"/dashBoard/businesses"}
+              icon={<BusinessIcon />}
+              path={"/dashBoard/businesses"}
               title="Businesses"
             />
             <NavLinks
-              iconView={
+              icon={
                 <LinkIconBox>
                   <img
                     src={administrationIcon}
@@ -112,51 +122,69 @@ export default function DashboardLayout() {
                   />
                 </LinkIconBox>
               }
-              toUrl={"/dashBoard/administration"}
+              path={"/dashBoard/administration"}
               title="Administration"
-              menuItems={["Team mates", "Roles and privileges"]}
+              menuItems={[
+                {
+                  title: "Team mates",
+                  path: "/dashBoard/administration/team-mates",
+                },
+                {
+                  title: "Roles and privileges",
+                  path: "/dashBoard/administration/roles-and-privileges",
+                },
+              ]}
             />
             <NavLinks
-              iconView={
-                <LinkIconBox>
-                  <img src={activityLogIcon} alt="activityLog" width="100%" />
-                </LinkIconBox>
-              }
-              toUrl={"/dashBoard/activity-log"}
+              icon={<ActivityLogIcon />}
+              path={"/dashBoard/activity-log"}
               title="Activity log"
             />
           </Box>
         </NavLinksBox>
-        <hr style={{ width: "100vw", fontWeight: "lighter" }} />
-        <NavLinksBox>
+        <hr style={{ width: "100%", fontWeight: "lighter" }} />
+        <NavLinksBox sx={{ mt: "10px" }}>
           <Box>
             <NavLinks
-              iconView={
+              icon={
                 <LinkIconBox>
-                  <img src={settingsIcon} alt="settingsIcon" width="100%" />
+                  <SettiingsIcon />
                 </LinkIconBox>
               }
-              toUrl={"/dashBoard/setting"}
+              path={"/dashBoard/setting"}
               title={"Settings"}
             />
             <NavLinks
-              iconView={
-                <LinkIconBox>
-                  <img src={logOutIcon} alt="logoutIcon" width="100%" />
-                </LinkIconBox>
-              }
-              toUrl={"dashBoard/activity-log"}
+              icon={<LogOutIcon />}
+              path={"dashBoard/activity-log"}
               title={"Logout"}
+              onClick={() => {
+                console.log("loged out");
+              }}
             />
           </Box>
         </NavLinksBox>
       </NavLinkDrawer>
 
       {/* Content area, adjusted to leave space for sidebar */}
-      <Box sx={{ marginLeft: "260px", paddingLeft: 2 }}>
-        <Typography textAlign={"end"} color="red">
-          admin
-        </Typography>
+      <Box
+        sx={{
+          paddingLeft: "260px", // Ensure enough space for the drawer
+          width: "calc(100vw - 260px)", // Prevent overflow
+          height: "100vh",
+        }}
+      >
+        <AdminIconBox>
+          <Box height={"32px"} width={"auto"} display={"flex"} gap={"10px"}>
+          <AdminNameIcon style={{ width: "32px", height: "32px" }} />
+          <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <Typography width={"fit-content"} height={"18px"}>
+              Admin Name
+            </Typography>
+            <DropDownArrowIcon style={{ width: "12.73px", height: "7.78px" }} />
+          </Box>
+          </Box>
+        </AdminIconBox>
         <Outlet />
       </Box>
     </Container>

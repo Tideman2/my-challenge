@@ -3,7 +3,7 @@ import { AppBar, Box, styled } from "@mui/material";
 //gh GH "" || @
 
 import logo from "../../assets/img/logo_gzxyo7 2.png";
-import TopLogo from "../../assets/svgs/toplogo";
+import TopLogo from "../../assets/svgs/TopLogo";
   
 export default function AuthenticationLayout() {
       
