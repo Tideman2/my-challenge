@@ -71,6 +71,7 @@ let CustomSubNavLink = styled(NavLink, {
 function NavLinks({ icon, title, path, menuItems, ...rests }) {
   const location = useLocation();
   let [isMenuOpen, setMenuOpen] = useState(false);
+  let [isSubMenuActive, setSubMenuActive] = useState(false);
   const hasSubMenuItems = Boolean(menuItems?.length);
 
   useEffect(() => {
@@ -83,6 +84,7 @@ function NavLinks({ icon, title, path, menuItems, ...rests }) {
       .includes(location.pathname);
 
     setMenuOpen(isOneMenuItemActive);
+    setSubMenuActive(isOneMenuItemActive);
   }, [location.pathname, hasSubMenuItems]);
 
   return (
@@ -90,7 +92,7 @@ function NavLinks({ icon, title, path, menuItems, ...rests }) {
       <CustomNavLink
         {...rests}
         to={path}
-        active={hasSubMenuItems ? isMenuOpen : path === location.pathname}
+        active={hasSubMenuItems ? isSubMenuActive : path === location.pathname}
         onClick={(e) => {
           if (hasSubMenuItems || rests.onClick) {
             e.preventDefault();
@@ -109,7 +111,7 @@ function NavLinks({ icon, title, path, menuItems, ...rests }) {
         {hasSubMenuItems && (
           <DropDownArrowIcon
             style={{ width: "12.73px", height: "7.78px" }}
-            rotation={isMenuOpen? 180 : 270} // Rotate if menu is open
+            rotation={isMenuOpen ? 180 : 270} // Rotate if menu is open
           />
         )}
       </CustomNavLink>
