@@ -12,6 +12,8 @@ import LogOutIcon from "../../../assets/svgs/LogOutIcon";
 import ActivityLogIcon from "../../../assets/svgs/ActivityLogIcon";
 import AdminNameIcon from "../../../assets/svgs/AdminNameIcon";
 import DropDownArrowIcon from "../../../assets/svgs/DropDownArrowIcon";
+import HrLine from "../../../assets/svgs/HrLine";
+import PersonalCard from "../../../assets/svgs/PersonalCard";
 
 const NavLinkDrawer = styled(Drawer)({
   flexShrink: 0,
@@ -23,6 +25,7 @@ const NavLinkDrawer = styled(Drawer)({
     flexDirection: "column",
     paddingTop: "30px",
     overflow: "hidden",
+    border: "none"
   },
 });
 
@@ -59,25 +62,34 @@ const AdminIconBox = styled(Box)(() => {
   return {
     width: "100%",
     height: "82px",
+    boxSizing: "border-box",
+    paddingLeft: "24px",
+    paddingRight: "24px",
     display: "flex",
     justifyContent: "end",
     alignItems: "center",
-    borderBottom: "0.4px solid lightgray", 
+    borderBottom: "0.4px solid rgb(249, 250, 250)",
   };
 });
 
+const Content = styled(Box)(() => {
+
+  return {
+    padding: "24px"
+  }
+})
 
 export default function DashboardLayout() {
   return (
     <Container
       sx={{
-        margin: "0px",
-        padding: "0px",
-        display: "flex", // Flex layout to handle sidebar + content
+        margin: "0px !important",
+        padding: "0px !important",
+        display: "flex !important", // Flex layout to handle sidebar + content
       }}
       maxWidth={false}
     >
-      <NavLinkDrawer variant="permanent" margin= "0px">
+      <NavLinkDrawer variant="permanent" margin="0px">
         <LogoBox>
           <TopLogo style={{ width: "100%", height: "100%" }} />
         </LogoBox>
@@ -114,13 +126,7 @@ export default function DashboardLayout() {
             />
             <NavLinks
               icon={
-                <LinkIconBox>
-                  <img
-                    src={administrationIcon}
-                    alt="administrationIcon"
-                    width="100%"
-                  />
-                </LinkIconBox>
+                <PersonalCard />
               }
               path={"/dashBoard/administration"}
               title="Administration"
@@ -142,9 +148,8 @@ export default function DashboardLayout() {
             />
           </Box>
         </NavLinksBox>
-        <hr style={{ width: "100%", fontWeight: "lighter" }} />
-        <NavLinksBox sx={{ mt: "10px" }}>
-          <Box>
+        <HrLine style={{ width: "100%" }} />
+        <NavLinksBox sx={{ mt: "10px", gap: "10px" }}>
             <NavLinks
               icon={
                 <LinkIconBox>
@@ -162,7 +167,6 @@ export default function DashboardLayout() {
                 console.log("loged out");
               }}
             />
-          </Box>
         </NavLinksBox>
       </NavLinkDrawer>
 
@@ -175,17 +179,27 @@ export default function DashboardLayout() {
         }}
       >
         <AdminIconBox>
-          <Box height={"32px"} width={"auto"} display={"flex"} gap={"10px"}>
-          <AdminNameIcon style={{ width: "32px", height: "32px" }} />
-          <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
-            <Typography width={"fit-content"} height={"18px"}>
-              Admin Name
-            </Typography>
-            <DropDownArrowIcon style={{ width: "12.73px", height: "7.78px" }} />
-          </Box>
+          <Box
+            height={"32px"}
+            width={"auto"}
+            display={"flex"}
+            alignItems={"center"}
+            gap={"10px"}
+          >
+            <AdminNameIcon style={{ width: "32px", height: "32px" }} />
+            <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
+              <Typography width={"fit-content"} height={"18px"}>
+                Admin Name
+              </Typography>
+              <DropDownArrowIcon
+                style={{ width: "12.73px", height: "7.78px" }}
+              />
+            </Box>
           </Box>
         </AdminIconBox>
+        <Content>
         <Outlet />
+        </Content>
       </Box>
     </Container>
   );

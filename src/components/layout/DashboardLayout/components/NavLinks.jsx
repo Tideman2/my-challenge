@@ -109,7 +109,7 @@ function NavLinks({ icon, title, path, menuItems, ...rests }) {
         {hasSubMenuItems && (
           <DropDownArrowIcon
             style={{ width: "12.73px", height: "7.78px" }}
-            rotation={isMenuOpen? 180 : 0} // Rotate if menu is open
+            rotation={isMenuOpen? 180 : 270} // Rotate if menu is open
           />
         )}
       </CustomNavLink>
