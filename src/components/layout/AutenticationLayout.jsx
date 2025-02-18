@@ -3,6 +3,7 @@ import { AppBar, Box, styled } from "@mui/material";
 //gh GH "" || @
 
 import logo from "../../assets/img/logo_gzxyo7 2.png";
+import TopLogo from "../../assets/svgs/TopLogo";
   
 export default function AuthenticationLayout() {
       
@@ -19,7 +20,8 @@ export default function AuthenticationLayout() {
                 marginTop: 3,
                 marginLeft: 3,
             }}>
-            <img src={logo} alt="Logo" width="100%"/>
+            {/* <img src={logo} alt="Logo" width="100%"/> */}
+            <TopLogo />
             </Box>
         </AppBar>
          <AuthenticationLayoutBox>
