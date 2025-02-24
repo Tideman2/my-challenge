@@ -23,7 +23,7 @@ export default function AuthenticationLayout() {
           }}
         >
           {/* <img src={logo} alt="Logo" width="100%"/> */}
-          <TopLogo />
+          <TopLogo style={{ width: "100%", height: "100%" }}/>
         </Box>
       </AppBar>
       <AuthenticationLayoutBox>
