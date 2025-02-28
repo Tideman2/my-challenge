@@ -16,9 +16,10 @@ let TextBox = styled(Box)(() => {
   };
 });
 
-export default function MoreDetails() {
+
+export default function MoreDetails(props) {
   return (
-    <TextBox>
+    <TextBox {...props}>
         <Box sx={{
             width: "100%",
             backgroundColor: "#F9FAFA",

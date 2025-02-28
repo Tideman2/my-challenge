@@ -1,23 +1,20 @@
-import { Box } from "@mui/material";
-
-import ThreeDotIcon from "../../../assets/svgs/ThreeDotIcon";
-import MoreDetails from "../components/MoreDetails";
-import formatNumToNaira from "../../../utilities/formatNumToNaira";
+import formatNumToNaira from "../utilities/formatNumToNaira";
 
 export let businessDetailsCol = [
-  { field: "businessName", headerName: "BUSINESS NAME", minWidth: 135, flex: 1 },
-  { field: "totalAmount", headerName: "TOTAL AMOUNT", minWidth: 103, flex: 1 },
-  { field: "transactionId", headerName: "TRANSACTION ID", minWidth: 105, flex: 1 },
-  { field: "dateTime", headerName: "DATE & TIME", minWidth: 124, flex: 1 },
   {
-    field: "action",
-    headerName: "",
-    renderCell: (params) => (
-      <Box sx={{position: "relative", overflow: "visible"}}>{params.row.isMore ? <MoreDetails /> : <ThreeDotIcon />}</Box>
-    ),
-    minWidth: 80,
-    flex: 0.5, // Takes less space but still adjusts dynamically
+    field: "businessName",
+    headerName: "BUSINESS NAME",
+    minWidth: 135,
+    flex: 1,
   },
+  { field: "totalAmount", headerName: "TOTAL AMOUNT", minWidth: 103, flex: 1 },
+  {
+    field: "transactionId",
+    headerName: "TRANSACTION ID",
+    minWidth: 105,
+    flex: 1,
+  },
+  { field: "dateTime", headerName: "DATE & TIME", minWidth: 124, flex: 1 },
 ];
 
 export let businessDetailsRow = [

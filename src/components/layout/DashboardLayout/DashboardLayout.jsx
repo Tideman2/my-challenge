@@ -3,7 +3,6 @@ import { Outlet } from "react-router-dom";
 import GridViewIcon from "@mui/icons-material/GridView";
 
 import TopLogo from "../../../assets/svgs/TopLogo";
-import administrationIcon from "../../../assets/img/personalcard.png";
 import NavLinks from "./components/NavLinks";
 import TransactionIcon from "../../../assets/svgs/TransactionIcon";
 import BusinessIcon from "../../../assets/svgs/BusinessIcon";
@@ -72,16 +71,19 @@ const AdminIconBox = styled(Box)(() => {
   };
 });
 
-const Content = styled(Box)(() => {
+const Content = styled(Container)(() => {
 
   return {
-    padding: "24px"
+    padding: "24px",
+    margin: "0px !important",
+    boxSizing: "border-box",
+    width: "100%"
   }
 })
 
 export default function DashboardLayout() {
   return (
-    <Container
+    <Box
       sx={{
         margin: "0px !important",
         padding: "0px !important",
@@ -201,6 +203,6 @@ export default function DashboardLayout() {
         <Outlet />
         </Content>
       </Box>
-    </Container>
+    </Box>
   );
 }

@@ -1,21 +1,21 @@
-import { Typography, styled, Box, } from "@mui/material"
+import { Typography, styled, Box } from "@mui/material"
 
 import BusinesePaymentCard from "./components/BusinesePaymentCard"
 import paymentSummary from "../../assets/dummydatas/paymentSummary"
-import TableToDisplayData from "./components/TableToDisplayData"
+import TableToDisplayData from "../../components/TableToDisplayData"
 
 let UserWelComeComponent = styled(Typography)(() => {
     return {
       fontWeight: "bold",
       width: "235px",
       height: "30px",
-      fontSize: "24px"
+      fontSize: "24px",
     }
 })
 
 let FourBoxContainer = styled(Box)(() => {
     return {
-       width: "1112px",
+       width: "100%",
        height: "112px",
        boxSizing: "border-box",
        marginTop: "20px",
@@ -29,7 +29,7 @@ let FourBoxContainer = styled(Box)(() => {
 export default function Board() {
 
     return (
-         <>
+          <Box width={"calc(100vw - 310px)"}>
           <UserWelComeComponent>
             Welcome back josh,
           </UserWelComeComponent>
@@ -40,7 +40,7 @@ export default function Board() {
             )
            })}
           </FourBoxContainer>
-          <TableToDisplayData />
-         </>
+          <TableToDisplayData moreDetailsAction={(e) => {console.log(1)}}/>
+         </Box>
     )
 }

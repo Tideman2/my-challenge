@@ -8,7 +8,6 @@ export const theme = createTheme({
         styleOverrides: {
           root: {
             width: 344,
-            // No need to set height here
             '& .MuiOutlinedInput-root': {
               height: 39, // Set height of the outlined input
               '& fieldset': {
