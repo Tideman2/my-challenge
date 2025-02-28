@@ -26,9 +26,13 @@ export let moreDetailsColumns = (activeRowId, setActiveRowId) => [
     field: "description",
     headerName: "DESCRIPTION",
     renderCell: (params) => (
-      <CellsBox>
+      <CellsBox
+        sx={{
+          justifyContent: activeRowId !== params.row.id && "center",
+        }}
+      >
         <TopText
-           sx={{
+          sx={{
             whiteSpace: activeRowId === params.row.id ? "normal" : "nowrap",
             overflow: "hidden",
             textOverflow: "ellipsis",
@@ -48,7 +52,12 @@ export let moreDetailsColumns = (activeRowId, setActiveRowId) => [
     headerName: "AMOUNT",
     headerClassName: "amount-header",
     renderCell: (params) => (
-      <CellsBox sx={{paddingLeft: "40px",}}>
+      <CellsBox
+        sx={{
+          paddingLeft: "40px",
+          justifyContent: activeRowId !== params.row.id && "center",
+        }}
+      >
         <TopText>{params.row.amount}</TopText>
         {activeRowId === params.row.id && (
           <TextCompForMoreDetails top={"top Text"} sub={"more to come"} />
@@ -61,7 +70,11 @@ export let moreDetailsColumns = (activeRowId, setActiveRowId) => [
     field: "dateTime",
     headerName: "DATE & TIME",
     renderCell: (params) => (
-      <CellsBox>
+      <CellsBox
+        sx={{
+          justifyContent: activeRowId !== params.row.id && "center",
+        }}
+      >
         <TopText>{params.row.dateTime}</TopText>
         {activeRowId === params.row.id && (
           <TextCompForMoreDetails top={"top Text"} sub={"more to come"} />
@@ -75,14 +88,22 @@ export let moreDetailsColumns = (activeRowId, setActiveRowId) => [
     headerName: "STATUS",
     renderCell: (params) =>
       params.row.status ? (
-        <CellsBox>
+        <CellsBox
+          sx={{
+            justifyContent: activeRowId !== params.row.id && "center",
+          }}
+        >
           <SuccessIcon toFailure={false} />
           {activeRowId === params.row.id && (
             <TextCompForMoreDetails top={"top Text"} sub={"more to come"} />
           )}
         </CellsBox>
       ) : (
-        <CellsBox>
+        <CellsBox
+          sx={{
+            justifyContent: activeRowId !== params.row.id && "center",
+          }}
+        >
           <SuccessIcon toFailure={true} />
           {activeRowId === params.row.id && (
             <TextCompForMoreDetails top={"top Text"} sub={"more to come"} />
@@ -96,7 +117,12 @@ export let moreDetailsColumns = (activeRowId, setActiveRowId) => [
     headerName: "",
 
     renderCell: (params) => (
-      <CellsBox onClick={() => setActiveRowId(params)}>
+      <CellsBox
+        sx={{
+          justifyContent: activeRowId !== params.row.id && "center",
+        }}
+        onClick={() => setActiveRowId(params)}
+      >
         {activeRowId === params.row.id ? (
           <CollapseText expand={false} />
         ) : (

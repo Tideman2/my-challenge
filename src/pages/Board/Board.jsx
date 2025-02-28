@@ -29,7 +29,7 @@ let FourBoxContainer = styled(Box)(() => {
 export default function Board() {
 
     return (
-          <Box width={"calc(100vw - 310px)"}>
+          <Box>
           <UserWelComeComponent>
             Welcome back josh,
           </UserWelComeComponent>

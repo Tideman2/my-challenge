@@ -1,4 +1,4 @@
-import { Typography, styled, Box, Container } from "@mui/material";
+import { Typography, styled, Box } from "@mui/material";
 import { useState } from "react";
 
 import SearchInput from "./Components/SearchInput";
@@ -21,7 +21,7 @@ export default function Transaction() {
   let [moreDetailsActive, setMoreDetailsActive] = useState(false);
 
   return (
-      <Box width={"calc(100vw - 310px)"}>
+      <Box>
         {moreDetailsActive? (
          <MoreDetailsTable detailsActive={setMoreDetailsActive}/>
         ) : (

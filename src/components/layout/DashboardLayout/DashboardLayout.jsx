@@ -77,7 +77,8 @@ const Content = styled(Container)(() => {
     padding: "24px",
     margin: "0px !important",
     boxSizing: "border-box",
-    width: "100%"
+    width: "100%",
+    maxWidth: "none",
   }
 })
 
@@ -85,11 +86,11 @@ export default function DashboardLayout() {
   return (
     <Box
       sx={{
+        width: "100%",
         margin: "0px !important",
         padding: "0px !important",
         display: "flex !important", // Flex layout to handle sidebar + content
       }}
-      maxWidth={false}
     >
       <NavLinkDrawer variant="permanent" margin="0px">
         <LogoBox>
@@ -177,7 +178,7 @@ export default function DashboardLayout() {
         sx={{
           paddingLeft: "260px", // Ensure enough space for the drawer
           width: "calc(100vw - 260px)", // Prevent overflow
-          height: "100vh",
+          height: "100%",
         }}
       >
         <AdminIconBox>
@@ -189,7 +190,7 @@ export default function DashboardLayout() {
             gap={"10px"}
           >
             <AdminNameIcon style={{ width: "32px", height: "32px" }} />
-            <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: "10px"}}>
               <Typography width={"fit-content"} height={"18px"}>
                 Admin Name
               </Typography>
