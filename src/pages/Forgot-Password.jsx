@@ -62,6 +62,7 @@ export default function ForgotPassword() {
             error={emailErrorMessage}
             onBlur={validateEmail}
             onChange={(e) => {
+              setEmailErrorMessage("")
               setEmail(e.target.value);
             }}
             value={email}

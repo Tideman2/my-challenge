@@ -16,7 +16,7 @@ let TextBox = styled(Box)(() => {
   };
 });
 
-
+//more details comp used in tabletodisplay component
 export default function MoreDetails(props) {
   return (
     <TextBox {...props}>

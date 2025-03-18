@@ -3,7 +3,7 @@ import { styled, Typography, Box } from "@mui/material";
 import formatNumToNaira from "../utilities/formatNumToNaira";
 import SuccessIcon from "../components/SuccessIcon";
 import CollapseText from "../pages/Transaction/Components/moreDetailsComp/Components/CollapseText";
-import TextCompForMoreDetails from "../components/TextCompForMoreDetails";
+import TextCompForMoreDetails from "../components/detailsTable/TextCompForMoreDetails";
 
 let TopText = styled(Typography)(() => ({
   width: "100%",
@@ -21,6 +21,7 @@ let CellsBox = styled(Box)(() => ({
   width: "100%", // Ensures content does not overflow
 }));
 
+//objects used in Transaction page more details table
 export let moreDetailsColumns = (activeRowId, setActiveRowId) => [
   {
     field: "description",
@@ -41,16 +42,15 @@ export let moreDetailsColumns = (activeRowId, setActiveRowId) => [
           {params.row.description}
         </TopText>
         {activeRowId === params.row.id && (
-          <TextCompForMoreDetails top={"top Text"} sub={"more to come"} />
+          <TextCompForMoreDetails top={"REFERENCE NUMBER"} sub={params.row.descriptionBody} />
         )}
       </CellsBox>
     ),
-    flex: 1,
+    flex: 2,
   },
   {
     field: "amount",
     headerName: "AMOUNT",
-    headerClassName: "amount-header",
     renderCell: (params) => (
       <CellsBox
         sx={{
@@ -60,11 +60,11 @@ export let moreDetailsColumns = (activeRowId, setActiveRowId) => [
       >
         <TopText>{params.row.amount}</TopText>
         {activeRowId === params.row.id && (
-          <TextCompForMoreDetails top={"top Text"} sub={"more to come"} />
+          <TextCompForMoreDetails top={"BANK NAME"} sub={params.row.bankName} />
         )}
       </CellsBox>
     ),
-    flex: 1,
+    flex: 2,
   },
   {
     field: "dateTime",
@@ -77,11 +77,11 @@ export let moreDetailsColumns = (activeRowId, setActiveRowId) => [
       >
         <TopText>{params.row.dateTime}</TopText>
         {activeRowId === params.row.id && (
-          <TextCompForMoreDetails top={"top Text"} sub={"more to come"} />
+          <TextCompForMoreDetails top={"PAYMENT MODE"} sub={params.row.paymentMode} />
         )}
       </CellsBox>
     ),
-    flex: 1,
+    flex: 2,
   },
   {
     field: "status",
@@ -95,7 +95,7 @@ export let moreDetailsColumns = (activeRowId, setActiveRowId) => [
         >
           <SuccessIcon toFailure={false} />
           {activeRowId === params.row.id && (
-            <TextCompForMoreDetails top={"top Text"} sub={"more to come"} />
+            <TextCompForMoreDetails top={"BANK ACCOUNT NO"} sub={params.row.accountNumber} />
           )}
         </CellsBox>
       ) : (
@@ -106,11 +106,11 @@ export let moreDetailsColumns = (activeRowId, setActiveRowId) => [
         >
           <SuccessIcon toFailure={true} />
           {activeRowId === params.row.id && (
-            <TextCompForMoreDetails top={"top Text"} sub={"more to come"} />
+            <TextCompForMoreDetails top={"BANK ACCOUNT NO"} sub={params.row.accountNumber} />
           )}
         </CellsBox>
       ),
-    flex: 1,
+    flex: 2,
   },
   {
     field: "collapse",
@@ -129,7 +129,7 @@ export let moreDetailsColumns = (activeRowId, setActiveRowId) => [
           <CollapseText expand={true} />
         )}
         {activeRowId === params.row.id && (
-          <TextCompForMoreDetails top={"top Text"} sub={"more to come"} />
+          <TextCompForMoreDetails top={"ACCOUNT NAME"} sub={params.row.accountName} />
         )}
       </CellsBox>
     ),
@@ -158,6 +158,11 @@ export let moreDetailsRows = [
     description: "January payments from Lagos transactions",
     amount: formatNumToNaira(4000000),
     dateTime: "2025-02-17 10:30",
+    paymentMode: "Bank transfer",
+    accountNumber: "0012343565",
+    accountName: "josh bamara",
+    descriptionBody: "#199-238-2943-1334",
+    bankName: "Zenith Bank",
     status: true,
   },
   {
@@ -165,6 +170,9 @@ export let moreDetailsRows = [
     description: "January payments from Lagos transactions",
     amount: formatNumToNaira(2500000),
     dateTime: "2025-02-20 14:15",
+    topText: "top text",
+    bottomTopText: "bottom top text",
+    bottomUnderText: "bottom under text",
     status: false,
   },
   {

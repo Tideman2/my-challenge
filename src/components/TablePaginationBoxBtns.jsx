@@ -8,7 +8,7 @@ let ButtonContainer = styled(Box)(() => {
   }
 })
 
-export default function Btns(props) {
+export default function TablePaginationBoxBtns(props) {
  let isPage = props.type === "page"? props.selected: false
 
   return (

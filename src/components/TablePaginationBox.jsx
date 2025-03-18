@@ -1,30 +1,33 @@
 import { Pagination, Box, Typography } from "@mui/material";
 
-import Btns from "./Btns";
+import TablePaginationBoxBtns from "./TablePaginationBoxBtns";
 
 export default function TablePaginationBox({
   start,
   end,
   totalRows,
   paginationModel,
-  onPageChange
+  onPageChange,
 }) {
- 
- let paginationRenderItemCb = (item) => {
-     if (item.type === "previous") {
-       return <Btns {...item}>Prev</Btns>;
-     }
- 
-     if (item.type === "next") {
-       return <Btns {...item}>Next</Btns>;
-     }
- 
-     if (item.type === "page" && item.page === paginationModel.page) {
-       return <Btns {...item}>{`Page ${item.page}`}</Btns>;
-     }
- 
-     return null;
-   }   
+  let paginationRenderItemCb = (item) => {
+    if (item.type === "previous") {
+      return <TablePaginationBoxBtns {...item}>Prev</TablePaginationBoxBtns>;
+    }
+
+    if (item.type === "next") {
+      return <TablePaginationBoxBtns {...item}>Next</TablePaginationBoxBtns>;
+    }
+
+    if (item.type === "page" && item.page === paginationModel.page) {
+      return (
+        <TablePaginationBoxBtns
+          {...item}
+        >{`Page ${item.page}`}</TablePaginationBoxBtns>
+      );
+    }
+
+    return null;
+  };
 
   return (
     <Box
@@ -35,13 +38,16 @@ export default function TablePaginationBox({
         padding: "16px",
         width: "auto",
         height: "56px",
+        overflow: "visible",
       }}
     >
       <Typography>{`${start}–${end} of ${totalRows}`}</Typography>
       <Pagination
         count={Math.ceil(totalRows / paginationModel.pageSize)}
         page={paginationModel.page}
-        onChange={(event, value) => {onPageChange(event, value)}}
+        onChange={(event, value) => {
+          onPageChange(event, value);
+        }}
         renderItem={paginationRenderItemCb}
       />
     </Box>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Typography, styled, TextField, InputAdornment } from "@mui/material";
 
 
-import SearchIcon from "../../../assets/svgs/SearchIcon";
+import SearchIcon from "../assets/svgs/SearchIcon";
 
 let SearchField = styled(TextField)(() => {
   return {

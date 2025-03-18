@@ -2,11 +2,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
 import { Box, styled } from "@mui/material";
 
-import TablePaginationBox from "../../../../../components/TablePaginationBox";
-import {
-  moreDetailsColumns,
-  moreDetailsRows,
-} from "../../../../../data/moreDetails";
+import TablePaginationBox from "../TablePaginationBox";
 
 let TableContainer = styled(Box)(() => ({
   width: "100%",
@@ -25,7 +21,7 @@ let dataGridSx = {
   "& .MuiDataGrid-cell": {
     display: "flex",
     alignItems: "center",
-    overflow: "hidden",
+    overflow: "visible",
     textOverflow: "ellipsis",
     whiteSpace: "nowrap",
     padding: "0px !important",
@@ -58,14 +54,12 @@ let dataGridSx = {
   },
 };
 
-export default function DetailsTable() {
+export default function DetailsTable({columns, rows}) {
   let [activeRowId, setActiveRowId] = useState(-1);
   let [paginationModel, setPaginationModel] = useState({
     page: 1,
     pageSize: 10,
   });
-
-  console.log(moreDetailsRows);
 
   function handleViewMore(params) {
     setActiveRowId(activeRowId === params.row.id ? -1 : params.row.id);
@@ -77,12 +71,12 @@ export default function DetailsTable() {
     });
   }
 
-  let paginatedRows = moreDetailsRows.slice(
+  let paginatedRows = rows.slice(
     (paginationModel.page - 1) * paginationModel.pageSize,
     paginationModel.page * paginationModel.pageSize
   );
 
-  const totalRows = moreDetailsRows.length;
+  const totalRows = rows.length;
   const start = (paginationModel.page - 1) * paginationModel.pageSize + 1;
   const end = Math.min(
     paginationModel.page * paginationModel.pageSize,
@@ -94,7 +88,7 @@ export default function DetailsTable() {
       <Box display={"flex"} flexDirection={"column"}>
         <DataGrid
           rows={paginatedRows}
-          columns={moreDetailsColumns(activeRowId, handleViewMore)}
+          columns={columns(activeRowId, handleViewMore)}
           pageSize={5}
           paginationMode="client"
           hideFooterPagination

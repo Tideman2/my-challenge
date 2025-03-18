@@ -1,8 +1,11 @@
 import { Button, Box, Typography, styled } from "@mui/material";
+import { useDispatch } from "react-redux";
 
 import ExportCsv from "../../../../components/ExportCsv";
 import DropDownArrowIcon from "../../../../assets/svgs/DropDownArrowIcon";
-import DetailsTable from "./Components/DetailsTable";
+import DetailsTable from "../../../../components/detailsTable/DetailsTable";
+import { moreDetailsColumns, moreDetailsRows } from "../../../../data/moreDetails";
+import { transctionShowDetailsInActive } from "../../../../reduxStore/features/transaction";
 
 let UserWelComeComponent = styled(Typography)(() => {
   return {
@@ -24,7 +27,9 @@ let BackButton = styled(Button)(({ theme }) => ({
   padding: "20px",
 }));
 
-export default function ({ detailsActive }) {
+export default function () {
+  let dispatch = useDispatch();
+
   return (
     <Box>
       <Box sx={{ display: "flex", justifyContent: "space-between", mb: 2 }}>
@@ -39,7 +44,7 @@ export default function ({ detailsActive }) {
           />
         }
         onClick={() => {
-          detailsActive(false);
+          dispatch(transctionShowDetailsInActive())
         }}
       >
         Back
@@ -47,7 +52,7 @@ export default function ({ detailsActive }) {
       <Typography sx={{ fontSize: "24px", fontWeight: "Bold", mt: 3 }}>
         Total Amount : ₦4,000,000.00
       </Typography>
-       <DetailsTable />
+       <DetailsTable columns={moreDetailsColumns} rows={moreDetailsRows}/>
     </Box>
   );
 }

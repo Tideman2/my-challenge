@@ -1,11 +1,17 @@
 import { Typography, styled, Box } from "@mui/material";
 import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-import SearchInput from "./Components/SearchInput";
+import SearchInput from "../../components/SearchInput";
 import SelectDateDropdown from "./Components/SelectDateDropdown";
 import ExportCsv from "../../components/ExportCsv";
 import TableToDisplayData from "../../components/TableToDisplayData";
 import MoreDetailsTable from "./Components/moreDetailsComp/MoreDetailsTable";
+import {
+  businessDetailsCol,
+  businessDetailsRow,
+} from "../../data/businessDetails";
+import { transctionShowDetailsActive } from "../../reduxStore/features/transaction";
 
 let UserWelComeComponent = styled(Typography)(() => {
   return {
@@ -18,36 +24,44 @@ let UserWelComeComponent = styled(Typography)(() => {
 });
 
 export default function Transaction() {
-  let [moreDetailsActive, setMoreDetailsActive] = useState(false);
+  let dispatch = useDispatch()
+  let moreDetailsActive = useSelector(
+    (state) => state.transactionReducer.transctionShowDetails
+  );
 
   return (
-      <Box>
-        {moreDetailsActive? (
-         <MoreDetailsTable detailsActive={setMoreDetailsActive}/>
-        ) : (
-          <>
+    <Box>
+      {moreDetailsActive ? (
+        <MoreDetailsTable />
+      ) : (
+        <>
           <Box
-          display={"flex"}
-          alignItems={"center"}
-          justifyContent={"space-between"}
-          width={"100%"}
-          sx={{
-            boxSizing: "border-box",
-          }}
-        >
-          <Box display={"flex"} gap={"10px"} alignItems={"center"}>
-            <UserWelComeComponent>Transactions</UserWelComeComponent>
-            <SearchInput />
+            display={"flex"}
+            alignItems={"center"}
+            justifyContent={"space-between"}
+            width={"100%"}
+            sx={{
+              boxSizing: "border-box",
+            }}
+          >
+            <Box display={"flex"} gap={"10px"} alignItems={"center"}>
+              <UserWelComeComponent>Transactions</UserWelComeComponent>
+              <SearchInput />
+            </Box>
+            <Box display={"flex"} gap={"10px"} alignItems={"center"}>
+              <SelectDateDropdown />
+              <ExportCsv />
+            </Box>
           </Box>
-          <Box display={"flex"} gap={"10px"} alignItems={"center"}>
-            <SelectDateDropdown />
-            <ExportCsv />
-          </Box>
-        </Box>
-        <TableToDisplayData moreDetailsAction={() => {setMoreDetailsActive(true)}} />
-          </>
-        )}
-      </Box>
-   
+          <TableToDisplayData
+            rowsInTable={businessDetailsRow}
+            columnsInTable={businessDetailsCol}
+            moreDetailsAction={() => {
+              dispatch(transctionShowDetailsActive())
+            }}
+          />
+        </>
+      )}
+    </Box>
   );
 }

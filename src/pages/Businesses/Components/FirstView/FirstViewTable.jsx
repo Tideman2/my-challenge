@@ -1,14 +1,20 @@
-import { styled, Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
+import { Box, styled, Stack } from "@mui/material";
+import { useSelector, useDispatch } from "react-redux";
 
-// import {
-//   businessDetailsCol,
-//   businessDetailsRow,
-// } from "../data/businessDetails";
-import ThreeDotIcon from "../assets/svgs/ThreeDotIcon";
-import MoreDetails from "./MoreDetails";
-import TablePaginationBox from "./TablePaginationBox";
+import {
+  businesseFirstViewRows,
+  businessFirstViewColumns,
+} from "../../../../data/businessFirstViewTableData";
+import ThreeDotIcon from "../../../../assets/svgs/ThreeDotIcon";
+import TablePaginationBox from "../../../../components/TablePaginationBox";
+import FirstViewMoreDetailsBtns from "./FirstViewMoreDetailsBtns";
+import {
+  withdrawDetailsViewActive,
+  firstViewInActive,
+  generateApiViewActive
+} from "../../../../reduxStore/features/business";
 
 let TableContainer = styled(Box)(() => {
   return {
@@ -18,7 +24,31 @@ let TableContainer = styled(Box)(() => {
     marginTop: "20px",
     boxSizing: "border-box",
     display: "flex",
+    overflow: "visible",
     flexDirection: "column",
+  };
+});
+
+let MoreDetailsBox = styled(Stack)(() => {
+  return {
+    position: "absolute",
+    width: "auto",
+    height: "auto",
+    padding: "0px",
+    left: "-140px",
+    backgroundColor: "white",
+    boxShadow: "0px 1px 3px 0px #00000014",
+    zIndex: 10,
+    borderRadius: "4px",
+  };
+});
+
+let CellBox = styled(Box)(() => {
+  return {
+    position: "relative",
+    overflow: "visible",
+    width: "100%",
+    padding: "5px",
   };
 });
 
@@ -54,56 +84,16 @@ let dataGridSx = {
   },
 };
 
-export default function TableToDisplayData({ moreDetailsAction, columnsInTable, rowsInTable }) {
-  const [row, setRows] = useState(rowsInTable);
+export default function FirstViewTable() {
+  let dispatch = useDispatch();
+  const [row, setRows] = useState(businesseFirstViewRows);
   let [paginationModel, setPaginationModel] = useState({
     page: 1,
     pageSize: 10,
   });
 
-  const columns = [
-    ...columnsInTable,
-    {
-      field: "action",
-      headerName: "",
-      renderCell: (params) => (
-        <Box
-          sx={{
-            position: "relative",
-            overflow: "visible",
-            width: "100%",
-            padding: "5px",
-          }}
-        >
-          {params.row.isMore ? (
-            <MoreDetails
-              onClick={(e) => {
-                if(moreDetailsAction) {
-                  e.stopPropagation();
-                moreDetailsAction(params);
-                }
-              }}
-            />
-          ) : (
-            <Box
-              sx={{
-                width: "fit-content",
-                height: "fit-content",
-                display: "flex",
-                justifySelf: "start",
-              }}
-            >
-              <ThreeDotIcon />
-            </Box>
-          )}
-        </Box>
-      ),
-      minWidth: 80,
-      flex: 0,
-    },
-  ];
-
-  function handleActionFieldClick(params) {
+  //function for mui datagrid component onCellclick prop
+  function HandleCellClick(params) {
     if (params.field !== "action") return;
     setRows((prev) =>
       prev.map((row) =>
@@ -112,11 +102,56 @@ export default function TableToDisplayData({ moreDetailsAction, columnsInTable, 
     );
   }
 
+  //function for mui pagination component onChnage prop
   function handlePageChange(event, value) {
     setPaginationModel((prev) => {
       return { ...prev, page: value };
     });
   }
+
+  //using redux to manage view of business route
+  function onViewWithdrawDetailsClick(event) {
+    event.stopPropagation();
+    dispatch(firstViewInActive());
+    dispatch(withdrawDetailsViewActive());
+  }
+
+  let columns = [
+    ...businessFirstViewColumns,
+    {
+      field: "action",
+      headerName: "",
+      renderCell: (params) => (
+        <CellBox>
+          {params.row.isMore ? (
+            <MoreDetailsBox>
+              <FirstViewMoreDetailsBtns
+                onClick={(event) => {
+                  onViewWithdrawDetailsClick(event);
+                }}
+              >
+                View withdrawal details
+              </FirstViewMoreDetailsBtns>
+              <FirstViewMoreDetailsBtns
+                onClick={(event) => {
+                  event.stopPropagation()
+                  dispatch(generateApiViewActive())
+                }}
+                sx={{ justifyContent: "start", marginLeft: "15px" }}
+              >
+                Generate Api key
+              </FirstViewMoreDetailsBtns>
+            </MoreDetailsBox>
+          ) : (
+            <Box>
+              <ThreeDotIcon />
+            </Box>
+          )}
+        </CellBox>
+      ),
+      flex: 0,
+    },
+  ];
 
   let paginatedRows = row.slice(
     (paginationModel.page - 1) * paginationModel.pageSize,
@@ -140,7 +175,7 @@ export default function TableToDisplayData({ moreDetailsAction, columnsInTable, 
           paginationMode="client"
           hideFooterPagination
           hideFooter
-          onCellClick={handleActionFieldClick}
+          onCellClick={HandleCellClick}
           checkboxSelection
           disableRowSelectionOnClick
           isCellEditable={() => {

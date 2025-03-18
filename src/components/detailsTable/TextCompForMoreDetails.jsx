@@ -15,6 +15,7 @@ let SubText = styled(Typography)(() => ({
   color: "#213336",
 }));
 
+//component used in moreDetails js file in data folder
 export default function TextCompForMoreDetails({ top, sub }) {
   return (
     <Box
@@ -25,7 +26,7 @@ export default function TextCompForMoreDetails({ top, sub }) {
       marginBottom={"15px"}
     >
       <TopText>{top}</TopText>
-      <SubText>{sub}</SubText>
+      <SubText>{sub? sub: ("more to come")}</SubText>
     </Box>
   );
 }

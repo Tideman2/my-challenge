@@ -10,20 +10,22 @@ import {
 import { useState } from "react"
 
 
-let LoginLabel = styled(FormLabel)(() => {
+let LoginLabel = styled(FormLabel)(({labelColor}) => {
   return {
     fontWeight: 600, // Adjust font weight for all FormLabel components
     fontSize: 13,
     height: 20,
+    color: labelColor? labelColor: "black"
   };
 });
 
-export default function InputComponent({ type, label, error, ...restProps }) {
+
+export default function InputComponent({ type, label, error, labelColor, formSx, ...restProps }) {
 let [showPassword, setShowPassword] = useState(false);
 
   return (
-    <FormControl fullWidth>
-      {label && <LoginLabel>{label}</LoginLabel>}
+    <FormControl fullWidth sx={formSx || {}} >
+      {label && <LoginLabel labelColor={labelColor}>{label}</LoginLabel>}
       <TextField
         type={showPassword? `text`: type}
         {...restProps}
@@ -50,6 +52,11 @@ let [showPassword, setShowPassword] = useState(false);
             ...restProps.slotProps?.input
           },
         }}
+        sx={{
+          "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+            borderColor: "#EBEDEF !important",
+          },
+        }}        
       />
       {error && <FormHelperText sx={{
         color: `red`
