@@ -20,7 +20,7 @@ import ActivityLog from "./pages/Activity-log/ActivityLog";
 import Settings from "./pages/Settings/Settings";
 import Administration from "./pages/Administration/Administation";
 import Businesses from "./pages/Businesses/Businesses";
-import Board from "./pages/Board";
+import Board from "./pages/Board/Board";
 import TeamMates from "./pages/Administration/components/TeamMates";
 import RolesAndPrivileges from "./pages/Administration/components/RolesAndPrivileges";
 

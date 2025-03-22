@@ -67,6 +67,7 @@ export default function CreatePassword() {
               type={"password"}
               label={"password"}
               onChange={(e) => {
+                setPasswordError("")
                 setPassword(e.target.value);
               }}
               error={passwordError}
@@ -77,6 +78,7 @@ export default function CreatePassword() {
               type={"password"}
               label={"confirm password"}
               onChange={(e) => {
+                setPasswordError("")
                 setConfirmPassword(e.target.value);
               }}
               error={confirmPasswordError}

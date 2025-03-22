@@ -29,10 +29,8 @@ let LoginCard = styled(Card)(({ theme }) => {
 
 
 export default function Login() {
-  let [emailError, setEmailError] = useState(false);
   let [emailErrorMessage, setEmailErrorMessage] = useState(``);
   let [passWordErrorMessage, setPasswordErrorMesssage] = useState(``);
-  let [passWordError, setPasswordError] = useState(false);
   const dispatch = useDispatch();
   const fetcher = useFetcher();
 
@@ -52,11 +50,10 @@ export default function Login() {
     console.log(email);
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (email.length === 0) {
-      setEmailError(true); //set error if string is empty
+      // setEmailError(true); 
       setEmailErrorMessage(`Input must not be empty`);
       return false; // if it isnt validated
     } else if (!emailRegex.test(email)) {
-      setEmailError(true); // Set error if email is invalid
       setEmailErrorMessage(`Pls input a valid email`);
       return false; //if it isnt validated
     }
@@ -67,12 +64,10 @@ export default function Login() {
   function validatePassword() {
     let pass = userPassword;
     console.log(pass);
-    if (pass.length === 0) {
-      setPasswordError(true); //set error if pass is empty
+    if (pass.length === 0) { 
       setPasswordErrorMesssage(`Input must not be empty`);
       return false; // if it isnt validated
     } else if (pass.length <= 7) {
-      setPasswordError(true); // Set error if email is invalid
       setPasswordErrorMesssage(`Password must be more than 7 digits`);
       return false; // if it isnt validated
     }
@@ -114,6 +109,7 @@ export default function Login() {
               name="email"
               error={emailErrorMessage}
               onChange={(e) => {
+                setEmailErrorMessage("")
                 dispatch(updateEmail({ email: e.target.value }));
               }}
             />
@@ -123,6 +119,7 @@ export default function Login() {
               type={`password`}
               name="password"
               onChange={(e) => {
+                setPasswordErrorMesssage("")
                 dispatch(updatePassword({ password: e.target.value }));
               }}
               label={`Password`}

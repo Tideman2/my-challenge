@@ -38,7 +38,8 @@ export default function Collaborate() {
     console.log(email);
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (email.length === 0) {
-      setEmailError(`Input must not be empty`);
+      return
+      // setEmailError(`Input must not be empty`);
     } else if (!emailRegex.test(email)) {
       setEmailError(`Pls input a valid email`);
     }
@@ -48,7 +49,8 @@ export default function Collaborate() {
     let pass = password;
     console.log(pass);
     if (pass.length === 0) {
-      setPasswordError(`Input must not be empty`); //set error if pass is empty
+      return
+      // setPasswordError(`Input must not be empty`); //set error if pass is empty
     } else if (pass.length <= 7) {
       setPasswordError(`Password must be more than 7 digits`); // Set error if email is invalid
     }
@@ -97,6 +99,7 @@ export default function Collaborate() {
               onBlur={validateEmail}
               onChange={(e) => {
                 setEmail(e.target.value);
+                setEmailError("")
               }}
             />
             <InputComponent
@@ -107,6 +110,7 @@ export default function Collaborate() {
               onBlur={validatePassword}
               onChange={(e) => {
                 setPassword(e.target.value);
+                setPasswordError("")
               }}
             />
           </Box>
