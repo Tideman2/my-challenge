@@ -6,6 +6,8 @@ import InputComponent from "../../../../components/InputComponent";
 import AddNewBusinessDropdown from "./AddNewBusinessDropdown";
 import TimesIcon from "../../../../assets/svgs/TimesIcon";
 import { moreBusinessViewInActive } from "../../../../reduxStore/features/business";
+import CustomBlueButton from "../../../../components/CustomBlueButton";
+
 let ContainerForImputs = styled(Box)(() => {
   return {
     height: "699px",
@@ -62,12 +64,14 @@ export default function AddNewBusinesses() {
     <Dialog
       open={isDialogOpen}
       onClose={onDialogClose}
-      PaperProps={{
-        sx: {
-          backgroundColor: "transparent",
-          boxShadow: "none",
-          maxWidth: "unset",
-          padding: 0,
+      slotProps={{
+        paper: {
+          sx: {
+            backgroundColor: "transparent",
+            boxShadow: "none",
+            maxWidth: "unset",
+            padding: 0,
+          },
         },
       }}
     >
@@ -111,18 +115,9 @@ export default function AddNewBusinesses() {
             labelColor={"#1A1C1F"}
           />
         </InputsBox>
-        <Button
-          type="submit"
-          variant="contained"
-          sx={{
-            width: "344px",
-            margin: "none",
-            textTransform: `none`,
-            height: 48,
-          }}
-        >
+        <CustomBlueButton height={"48px"} width={"344px"}>
           Add business
-        </Button>
+        </CustomBlueButton>
       </ContainerForImputs>
     </Dialog>
   );

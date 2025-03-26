@@ -1,6 +1,7 @@
 import { Box, Typography, styled, Button } from "@mui/material";
 
 import CopyIcon from "../../../../assets/svgs/CopyIcon";
+import CustomBlueButton from "../../../../components/CustomBlueButton";
 
 let ContentContainer = styled(Box)(() => {
   return {
@@ -44,7 +45,7 @@ let CustomTypo = styled(Typography)(() => {
   };
 });
 
-export default function ApiModalViewOne({reetApi}) {
+export default function ApiModalViewOne({ reetApi }) {
   return (
     <ContentContainer>
       <Typography
@@ -67,18 +68,9 @@ export default function ApiModalViewOne({reetApi}) {
         </ApiKeyBox>
         <CustomTypo onClick={reetApi}>Reset Api Key</CustomTypo>
       </ApiNumResetBox>
-      <Button
-        type="submit"
-        variant="contained"
-        sx={{
-          width: "344px",
-          margin: "none",
-          textTransform: `none`,
-          height: 48,
-        }}
-      >
-        Copy Api Key <CopyIcon style={{marginLeft:"5px"}}/>
-      </Button>
+      <CustomBlueButton width={"344px"} height={"48px"}>
+        Copy Api Key <CopyIcon style={{ marginLeft: "5px" }} />
+      </CustomBlueButton>
     </ContentContainer>
   );
 }

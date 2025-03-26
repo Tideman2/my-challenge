@@ -4,6 +4,7 @@ import { useDispatch } from "react-redux";
 import SearchInput from "../../../components/SearchInput";
 import ExportCsv from "../../../components/ExportCsv";
 import FirstViewTable from "./FirstView/FirstViewTable";
+import CustomBlueButton from "../../../components/CustomBlueButton";
 import { moreBusinessViewActive } from "../../../reduxStore/features/business";
 let UserWelComeComponent = styled(Typography)(() => {
   return {
@@ -14,24 +15,8 @@ let UserWelComeComponent = styled(Typography)(() => {
   };
 });
 
-const AddNewBusinessButton = styled(Button)(() => ({
-    all: "unset", 
-    cursor: "pointer", 
-    display: "flex", 
-    width: "169px",
-    height: "48px",
-    borderRadius: "4px",
-    backgroundColor: "#2D75B6",    
-    fontSize: "14px",
-    justifyContent: "center",
-    alignItems: "center",
-    color: "white",
-  }));
-  
-
 export default function BusinessesFirstView() {
-  let dispatch = useDispatch()
-
+  let dispatch = useDispatch();
 
   return (
     <Box>
@@ -46,11 +31,19 @@ export default function BusinessesFirstView() {
       >
         <Box display={"flex"} gap={"20px"} alignItems={"center"}>
           <UserWelComeComponent>Businesse</UserWelComeComponent>
-           <SearchInput /> 
+          <SearchInput />
         </Box>
         <Box display={"flex"} gap={"10px"} alignItems={"center"}>
-          <AddNewBusinessButton onClick={() => {dispatch(moreBusinessViewActive())}}>Add new business</AddNewBusinessButton>
-           <ExportCsv />
+          <CustomBlueButton
+            height={"48px"}
+            width={"169px"}
+            onClick={() => {
+              dispatch(moreBusinessViewActive());
+            }}
+          >
+            Add new business
+          </CustomBlueButton>
+          <ExportCsv />
         </Box>
       </Box>
       <FirstViewTable />
