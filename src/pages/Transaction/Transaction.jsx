@@ -1,5 +1,4 @@
 import { Typography, styled, Box } from "@mui/material";
-import { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import SearchInput from "../../components/SearchInput";

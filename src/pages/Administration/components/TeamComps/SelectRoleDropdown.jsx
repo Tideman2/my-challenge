@@ -1,26 +1,13 @@
-import {
-  MenuItem,
-  FormControl,
-  Select,
-  styled,
-  Typography,
-} from "@mui/material";
+import { Select, MenuItem, styled } from "@mui/material";
 import { useState } from "react";
 
-let DropDownLabel = styled(Typography)(() => {
-  return {
-    fontWeight: 600, // Adjust font weight for all FormLabel components
-    fontSize: 13,
-    height: 20,
-    color: "#1A1C1F"
-  };
-});
-
+import DropDownArrowIcon from "../../../../assets/svgs/DropDownArrowIcon";
 
 const CustomSelect = styled(Select)(() => ({
   backgroundColor: "transparent",
   width: "100%",
   height: "46px",
+  color: "#B0B0B0",
   border: "0.5px solid rgba(0, 0, 0, 0.1)",
   "&:hover": {
     backgroundColor: "transparent !important",
@@ -53,22 +40,32 @@ const menuProps = {
     },
   },
   autoFocus: false,
+  disablePortal: true,
 };
 
-export default function AddNewBusinessDropdown({title}) {
-  let [business, setBusiness] = useState("Real estate");
+export default function SelectRoleDrodown() {
+  let [value, setValue] = useState("");
+  let [isOpem, setIsOpen] = useState(false);
 
-  function handleSetBusiness(event) {
-    setBusiness(event.target.value);
-  }
   return (
-    <FormControl>
-      <DropDownLabel>{title}</DropDownLabel>
-      <CustomSelect onChange={handleSetBusiness} value={business} MenuProps={menuProps}>
-        <MenuItem value={"Real estate"} disabled>Real estate</MenuItem>
-        <MenuItem value={"retail"}>Retail</MenuItem>
-        <MenuItem value={"wholesale"}>Wholesale</MenuItem>
-      </CustomSelect>
-    </FormControl>
+    <CustomSelect
+      displayEmpty
+      value={value}
+      sx={{ marginBottom: isOpem ? "65px" : "0px" }}
+      MenuProps={menuProps}
+      IconComponent={DropDownArrowIcon}
+      onChange={(e) => {
+        setValue(e.target.value);
+      }}
+      renderValue={(selected) => selected || "Select Role"}
+      onOpen={() => {
+        setIsOpen(true);
+      }}
+      onClose={() => {
+        setIsOpen(false);
+      }}
+    >
+      <MenuItem value="customerSupport">Customer Support</MenuItem>
+    </CustomSelect>
   );
 }

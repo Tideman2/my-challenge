@@ -27,10 +27,10 @@ let StatusText = styled(Typography)(({failure}) => {
   };
 });
 
-export default function SuccessIcon({toFailure}) {
+export default function SuccessIcon({toFailure, ...props}) {
   return <StatusBox failure={toFailure}>
     <StatusText failure={toFailure}>
-     {toFailure? "Failed": "Successul"}
+    {props.children? props.children: toFailure? "Failed": "Successul"}
     </StatusText>
   </StatusBox>;
 }

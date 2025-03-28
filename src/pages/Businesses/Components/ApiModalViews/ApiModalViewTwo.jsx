@@ -2,6 +2,7 @@ import { Box, Typography, styled, TextField, Button } from "@mui/material";
 import { useState } from "react";
 
 import NoticeIcon from "../../../../assets/svgs/NoticeIcon";
+import CustomBlueButton from "../../../../components/CustomBlueButton";
 import InputComponent from "../../../../components/InputComponent";
 let ContentContainer = styled(Box)(() => {
   return {
@@ -53,15 +54,15 @@ export default function ApiModalViewTwo() {
   let [erroMessage, setErrorMessage] = useState("");
 
   function handlePasswordChange(event) {
-     setPassword((prev) => {
-        let newData = event.target.value
-        return newData
-     })
-     setErrorMessage("")
-  } 
+    setPassword((prev) => {
+      let newData = event.target.value;
+      return newData;
+    });
+    setErrorMessage("");
+  }
 
-   //  Password validation function
-   function validatePassword() {
+  //  Password validation function
+  function validatePassword() {
     let pass = password;
     console.log(pass);
     if (pass.length === 0) {
@@ -73,7 +74,6 @@ export default function ApiModalViewTwo() {
     }
     return true; // if it reaches here then it is validated
   }
-
 
   return (
     <ContentContainer>
@@ -118,22 +118,13 @@ export default function ApiModalViewTwo() {
           labelColor={"#1A1C1F"}
           onBlur={validatePassword}
           onChange={handlePasswordChange}
-          value={password?? ""}
+          value={password ?? ""}
           error={erroMessage}
         />
       </Box>
-      <Button
-        type="submit"
-        variant="contained"
-        sx={{
-          width: "344px",
-          margin: "none",
-          textTransform: `none`,
-          height: 48,
-        }}
-      >
-        Reset Api Key 
-      </Button>
+      <CustomBlueButton width={"344px"} height={"48px"}>
+        Reset Api Key
+      </CustomBlueButton>
     </ContentContainer>
   );
 }

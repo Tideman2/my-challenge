@@ -3,8 +3,9 @@ import SvgIcon from "@mui/material/SvgIcon";
 export default function DropDownArrowIcon({ rotation = 0, ...props }) {
   return (
     <SvgIcon
-      width="14"
-      height="8"
+      width="13px"
+      height="6.45px"
+      style={{ width: "13px", height: "6.45px" }}
       viewBox="0 0 14 8"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
