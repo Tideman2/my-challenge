@@ -1,19 +1,21 @@
-import { Box, styled, Typography } from "@mui/material";
+import { Box, styled, Typography, Button } from "@mui/material";
+import { useState, useEffect } from "react";
 
 import CustomBlueButton from "../../../../components/CustomBlueButton";
 import CopyIcon from "../../../../assets/svgs/CopyIcon";
 
-let ContentBox = styled(Box)(() => {
+let ContentBox = styled(Box)(({ increase }) => {
   return {
     width: "486px",
     boxSizing: "border-box",
-    height: "566px",
+    height: increase ? "610px" : "566px",
     backgroundColor: "#FFFFFF",
     display: "flex",
     borderRadius: "6px",
     flexDirection: "column",
     justifyContent: "space-around",
     alignItems: "center",
+    padding: "10px"
   };
 });
 
@@ -57,9 +59,35 @@ const HrLine = styled("hr")(() => ({
   width: "100%",
 }));
 
-export default function DetailsInSummary({ rowDetail, setPermission }) {
+let CustomButton = styled(Button)(({}) => {
+  return {
+    all: "unset",
+    cursor: "pointer",
+    display: "flex",
+    border: "1px solid #2D75B6",
+    borderRadius: "4px",
+    width: "102px",
+    fontWeight: 600,
+    height: "35px",
+    backgroundColor: "unset",
+    fontSize: "14px",
+    justifyContent: "center",
+    alignItems: "center",
+    color: "#2D75B6",
+  };
+});
+
+export default function DetailsInSummary({ rowDetail, setPermission, changeRole }) {
+  let [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    if (rowDetail.role === "admin") {
+      setIsAdmin(true);
+    }
+  }, []);
+
   return (
-    <ContentBox>
+    <ContentBox increase={isAdmin.toString()}>
       <Typography
         textAlign={"center"}
         sx={{ fontSize: "20px", color: "#23203D", fontWeight: "bold" }}
@@ -79,7 +107,21 @@ export default function DetailsInSummary({ rowDetail, setPermission }) {
           boxSizing: "border-box",
         }}
       >
-        <RoundedTextBox>TO</RoundedTextBox>
+        <Box
+          sx={{
+            width: "100%",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "0px",
+          }}
+        >
+          <RoundedTextBox>TO</RoundedTextBox>
+          {isAdmin && <CustomButton onClick={(e) => {
+            e.stopPropagation()
+            changeRole()
+          }}>Change Role</CustomButton>}
+        </Box>
         <TextWrapper marginBottom={"10px"} marginTop={"10px"}>
           {rowDetail.fullName}
         </TextWrapper>
@@ -87,7 +129,9 @@ export default function DetailsInSummary({ rowDetail, setPermission }) {
           <TextWrapper>Email Address</TextWrapper>
           <TextWrapper display={"flex"} alignItems={"center"} gap={"3px"}>
             {rowDetail.email}
-            <CopyIcon style={{width: "15px", height: "15px", stroke: "#1A1C1F"}} />
+            <CopyIcon
+              style={{ width: "15px", height: "15px", stroke: "#1A1C1F" }}
+            />
           </TextWrapper>
         </TextBox>
         <HrLine />
@@ -104,11 +148,22 @@ export default function DetailsInSummary({ rowDetail, setPermission }) {
       <CustomBlueButton
         width={"416px"}
         height={"48px"}
-        borderRadius={"4px"}
+        borderradius={"4px"}
         onClick={setPermission}
       >
         View permissions
       </CustomBlueButton>
+      {isAdmin && (
+        <CustomBlueButton
+          width={"416px"}
+          height={"48px"}
+          borderradius={"4px"}
+          sx={{ backgroundColor: "#FC6250" }}
+          onClick={setPermission}
+        >
+          Remove member
+        </CustomBlueButton>
+      )}
     </ContentBox>
   );
 }

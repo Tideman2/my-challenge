@@ -1,6 +1,8 @@
 import { Select, MenuItem, styled } from "@mui/material";
 import { useState } from "react";
 
+import DropDownArrowIcon from "../../../../assets/svgs/DropDownArrowIcon";
+
 const CustomSelect = styled(Select)(() => ({
   backgroundColor: "transparent",
   width: "100%",
@@ -51,6 +53,7 @@ export default function SelectRoleDrodown() {
       value={value}
       sx={{ marginBottom: isOpem ? "65px" : "0px" }}
       MenuProps={menuProps}
+      IconComponent={DropDownArrowIcon}
       onChange={(e) => {
         setValue(e.target.value);
       }}

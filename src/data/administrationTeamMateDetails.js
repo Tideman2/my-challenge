@@ -73,7 +73,7 @@ function generateRandomRows() {
   const baseRow = {
     fullName: "Temidayo Oluwaniyi",
     email: "t.oluwaniyi@gmail.com",
-    role: "admin",
+    role: "adminn",
   };
 
   return Array.from({ length: 15 }, (_, index) => ({

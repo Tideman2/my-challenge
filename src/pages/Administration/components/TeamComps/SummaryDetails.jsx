@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import TimesIcon from "../../../../assets/svgs/TimesIcon";
 import DetailsInSummary from "./DetailsInSummary";
 import Permissions from "./Permissions";
+import ChangeRoleView from "./ChangeRoleView";
 
 let BackIconWrapper = styled(Box)(() => {
   return {
@@ -19,15 +20,6 @@ let BackIconWrapper = styled(Box)(() => {
   };
 });
 
-let CustomTypo = styled(Typography)(() => {
-  return {
-    fontSize: "13px",
-    color: "#1A1C1F",
-    marginBottom: "5px",
-    fontWeight: 600,
-  };
-});
-
 export default function SummaryDetails({
   isModalOpen,
   setModalState,
@@ -35,14 +27,30 @@ export default function SummaryDetails({
   setDetails,
 }) {
   let [isPermission, setIsPermission] = useState(false);
+  let [isSummary, setSummary] = useState(false);
+  let [isChangeRole, setChangeRole] = useState(false);
+
+  useEffect(() => {
+    setSummary(true);
+  }, [isModalOpen]);
 
   function onModalClose() {
     setModalState(false);
-    setIsPermission(false)
+    setIsPermission(false);
+    setSummary(false);
+    setChangeRole(false);
   }
 
-  function HandleViewPermissions() {
+  function handleViewPermissions() {
+    setSummary(false)
     setIsPermission(true);
+  }
+
+  function handleChangeRole() {
+    console.log("566 shss")
+    setSummary(false);
+    setIsPermission(false);
+    setChangeRole(true);
   }
 
   return (
@@ -67,14 +75,19 @@ export default function SummaryDetails({
           style={{ width: "7.2px", height: "7.2px", color: "#6C7884" }}
         />
       </BackIconWrapper>
-      {isPermission ? (
-        <Permissions />
-      ) : (
+      {isSummary && (
         <DetailsInSummary
           rowDetail={details}
-          setPermission={HandleViewPermissions}
+          setPermission={handleViewPermissions}
+          changeRole={handleChangeRole}
         />
       )}
+    {isPermission && (
+        <Permissions />
+    )}
+    {isChangeRole && (
+      <ChangeRoleView />
+    )}
     </Dialog>
   );
 }

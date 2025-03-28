@@ -1,6 +1,5 @@
 import { Box, styled, Typography } from "@mui/material";
 
-import CustomBlueButton from "../../../../components/CustomBlueButton";
 import MarkIcon from "../../../../assets/svgs/MarkIcon";
 
 let ContentBox = styled(Box)(() => {
