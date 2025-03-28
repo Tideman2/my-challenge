@@ -9,6 +9,7 @@ import {
   administrationTeamMateRows,
 } from "../../../data/administrationTeamMateDetails";
 import InviteTeamMateModal from "./TeamComps/InviteTeamMateModal";
+import SummaryDetails from "./TeamComps/SummaryDetails";
 
 let UserWelComeComponent = styled(Typography)(() => {
   return {
@@ -31,6 +32,13 @@ let BoxForSearchAndAddTeamMate = styled(Box)(() => {
 
 export default function TeamMates() {
   let [inviteTeamModalState, setInviteTeamModal] = useState(false);
+  let [summaryModalState, setSummaryModal] = useState(false);
+  let [summaryDetails, setSummaryDetaisls] = useState(null);
+
+  function onMoreDetailsClick({row}) {
+    setSummaryDetaisls(row)
+    setSummaryModal(true)
+  }
 
   return (
     <Box>
@@ -53,11 +61,16 @@ export default function TeamMates() {
       <TableToDisplayData
         columnsInTable={administrationTeamMateCols}
         rowsInTable={administrationTeamMateRows}
+        moreDetailsAction={onMoreDetailsClick}
       />
       <InviteTeamMateModal
         isModalOpen={inviteTeamModalState}
         setModalState={setInviteTeamModal}
       />
+      <SummaryDetails isModalOpen={summaryModalState}
+      setModalState={setSummaryModal}
+      details={summaryDetails}
+      setDetails={setSummaryDetaisls}/>
     </Box>
   );
 }
