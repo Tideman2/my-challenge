@@ -8,12 +8,12 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 
-import DateIcon from "../../../assets/svgs/DateIcon";
+import ActivityDropDownIcon from "../../../assets/svgs/ActivityDropdownIcon";
 
 // Custom Styled Select
 const CustomSelect = styled(Select)(() => ({
     backgroundColor: "transparent",
-    width: "167px",
+    width: "152px",
     height: "46px",
     border: "0.5px solid rgba(0, 0, 0, 0.1)",
     "&:hover": {
@@ -48,28 +48,29 @@ const menuProps = {
     },
   },
   autoFocus: false,
+
 };
 
-export default function SelectDateDropdown() {
-  let [date, setDate] = useState("");
+export default function ActivityDropdown() {
+  let [value, setValue] = useState("");
 
-  function handleDateChange(event) {
-    setDate(event.target.value);
+  function handleValueChange(event) {
+    setValue(event.target.value);
   }
 
   return (
     <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
       <CustomSelect
-        value={date}
-        onChange={handleDateChange}
+        value={value}
+        onChange={handleValueChange}
         displayEmpty
         MenuProps={menuProps}
         renderValue={(selected) =>
           selected ? (
-            selected // Show selected value
+            selected
           ) : (
             <Box display="flex" alignItems="center">
-              <DateIcon
+              <ActivityDropDownIcon
                 style={{ color: "white", width: "18px", height: "18.5px" }}
               />
               <Typography
@@ -80,17 +81,19 @@ export default function SelectDateDropdown() {
                   height: "18px",
                 }}
               >
-                Select date
+                Activities
               </Typography>
             </Box>
           )
         }
       >
-        <MenuItem value={"today"}>Today</MenuItem>
-        <MenuItem value={"thisWeek"}>This week</MenuItem>
-        <MenuItem value={"last30Days"}>Last 30 days</MenuItem>
-        <MenuItem value={"last90Days"}>Last 90 days</MenuItem>
-        <MenuItem value={"customDate"}>Custom date</MenuItem>
+        <MenuItem value={"all"}>All</MenuItem>
+        <MenuItem value={"staffLogin"}>Staff login</MenuItem>
+        <MenuItem value={"passwordChange"}>Password change</MenuItem>
+        <MenuItem value={"createRole"}>Create role</MenuItem>
+        <MenuItem value={"changeRole"}>Change role</MenuItem>
+        <MenuItem value={"generateApiKey"}>Generate API key</MenuItem>
+        <MenuItem value={"regenerateApiKey"}>Regenerate API key</MenuItem>
       </CustomSelect>
     </FormControl>
   );
