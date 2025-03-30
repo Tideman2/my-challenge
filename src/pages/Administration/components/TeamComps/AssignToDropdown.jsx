@@ -44,25 +44,17 @@ const menuProps = {
 
 export default function AssignToDrodown() {
   let [value, setValue] = useState("");
-  let [isOpem, setIsOpen] = useState(false);
 
   return (
     <CustomSelect
       displayEmpty
       value={value}
-      sx={{ marginBottom: isOpem ? "65px" : "0px" }}
       MenuProps={menuProps}
       IconComponent={DropDownArrowIcon}
       onChange={(e) => {
         setValue(e.target.value);
       }}
       renderValue={(selected) => selected || "Select Business"}
-      onOpen={() => {
-        setIsOpen(true);
-      }}
-      onClose={() => {
-        setIsOpen(false);
-      }}
     >
       <MenuItem value="perryHoldings">Perry holdings</MenuItem>
     </CustomSelect>

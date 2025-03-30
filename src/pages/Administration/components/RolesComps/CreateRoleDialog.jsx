@@ -48,10 +48,10 @@ let permissionsData = [
   "Can view withdraw details",
   "Can add new business",
   "Can export businesses",
-  // "Can invite new member",
-  // "Can remove existing member",
-  // "Can create role",
-  // "Can change role",
+  "Can invite new member",
+  "Can remove existing member",
+  "Can create role",
+  "Can change role",
 ];
 
 export default function CreateRoleDialog({ isModalOpen, onModalClose }) {
@@ -97,7 +97,7 @@ export default function CreateRoleDialog({ isModalOpen, onModalClose }) {
           >
             Permissions
           </Typography>
-          <Box>
+          <Box sx={{overflowY: "auto", maxHeight: "300px"}}>
             {permissionsData.map((data, index) => {
               return (
                 <Box

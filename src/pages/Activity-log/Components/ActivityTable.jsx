@@ -2,13 +2,7 @@ import { styled, Box } from "@mui/material";
 import { DataGrid } from "@mui/x-data-grid";
 import { useState } from "react";
 
-// import {
-//   businessDetailsCol,
-//   businessDetailsRow,
-// } from "../data/businessDetails";
-import ThreeDotIcon from "../assets/svgs/ThreeDotIcon";
-import MoreDetails from "./MoreDetails";
-import TablePaginationBox from "./TablePaginationBox";
+import TablePaginationBox from "../../../components/TablePaginationBox";
 
 let TableContainer = styled(Box)(() => {
   return {
@@ -54,64 +48,13 @@ let dataGridSx = {
   },
 };
 
-export default function TableToDisplayData({ moreDetailsAction, columnsInTable, rowsInTable }) {
+export default function ActivityTable({  columnsInTable, rowsInTable }) {
   const [row, setRows] = useState(rowsInTable);
   let [paginationModel, setPaginationModel] = useState({
     page: 1,
     pageSize: 10,
   });
 
-  const columns = [
-    ...columnsInTable,
-    {
-      field: "action",
-      headerName: "",
-      renderCell: (params) => (
-        <Box
-          sx={{
-            position: "relative",
-            overflow: "visible",
-            width: "100%",
-            padding: "5px",
-            zIndex: 9999,
-          }}
-        >
-          {params.row.isMore ? (
-            <MoreDetails
-              onClick={(e) => {
-                if(moreDetailsAction) {
-                  e.stopPropagation();
-                moreDetailsAction(params);
-                }
-              }}
-            />
-          ) : (
-            <Box
-              sx={{
-                width: "fit-content",
-                height: "fit-content",
-                display: "flex",
-                justifySelf: "start",
-              }}
-            >
-              <ThreeDotIcon />
-            </Box>
-          )}
-        </Box>
-      ),
-      minWidth: 80,
-      flex: 0,
-    },
-  ];
-
-  function handleActionFieldClick(params) {
-    if (params.field !== "action") return;
-    setRows((prev) =>
-      prev.map((row) =>
-        row.id === params.id ? { ...row, isMore: !row.isMore } : row
-      )
-    );
-  }
 
   function handlePageChange(event, value) {
     setPaginationModel((prev) => {
@@ -136,12 +79,11 @@ export default function TableToDisplayData({ moreDetailsAction, columnsInTable, 
       <Box display={"flex"} flexDirection={"column"}>
         <DataGrid
           rows={paginatedRows}
-          columns={columns}
+          columns={columnsInTable}
           pageSize={paginationModel.pageSize}
           paginationMode="client"
           hideFooterPagination
           hideFooter
-          onCellClick={handleActionFieldClick}
           checkboxSelection
           disableRowSelectionOnClick
           isCellEditable={() => {

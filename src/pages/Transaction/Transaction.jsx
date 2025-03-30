@@ -2,7 +2,7 @@ import { Typography, styled, Box } from "@mui/material";
 import { useSelector, useDispatch } from "react-redux";
 
 import SearchInput from "../../components/SearchInput";
-import SelectDateDropdown from "./Components/SelectDateDropdown";
+import SelectDateDropdown from "../../components/SelectDateDropdown";
 import ExportCsv from "../../components/ExportCsv";
 import TableToDisplayData from "../../components/TableToDisplayData";
 import MoreDetailsTable from "./Components/moreDetailsComp/MoreDetailsTable";
