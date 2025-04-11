@@ -15,6 +15,7 @@ let LoginLabel = styled(FormLabel)(({labelColor}) => {
     fontWeight: 600, // Adjust font weight for all FormLabel components
     fontSize: 13,
     height: 20,
+    marginBottom: "5px",
     color: labelColor? labelColor: "black"
   };
 });
