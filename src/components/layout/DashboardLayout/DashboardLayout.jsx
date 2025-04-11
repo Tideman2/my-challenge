@@ -1,5 +1,6 @@
 import { Box, Drawer, Container, Typography, styled } from "@mui/material";
 import { Outlet } from "react-router-dom";
+import { useState } from "react";
 import GridViewIcon from "@mui/icons-material/GridView";
 
 import TopLogo from "../../../assets/svgs/TopLogo";
@@ -13,6 +14,7 @@ import AdminNameIcon from "../../../assets/svgs/AdminNameIcon";
 import DropDownArrowIcon from "../../../assets/svgs/DropDownArrowIcon";
 import HrLine from "../../../assets/svgs/HrLine";
 import PersonalCard from "../../../assets/svgs/PersonalCard";
+import LogoutComp from "./components/LogoutComp";
 
 const NavLinkDrawer = styled(Drawer)({
   flexShrink: 0,
@@ -83,6 +85,8 @@ const Content = styled(Container)(() => {
 })
 
 export default function DashboardLayout() {
+  let [logoutModal, setLogoutModal] = useState(false);
+
   return (
     <Box
       sx={{
@@ -168,6 +172,7 @@ export default function DashboardLayout() {
               title={"Logout"}
               onClick={() => {
                 console.log("loged out");
+                setLogoutModal(true)
               }}
             />
         </NavLinksBox>
@@ -204,6 +209,8 @@ export default function DashboardLayout() {
         <Outlet />
         </Content>
       </Box>
+      {/* log out modal */}
+      <LogoutComp isModalOpen={logoutModal} setModalState={setLogoutModal}/>
     </Box>
   );
 }
