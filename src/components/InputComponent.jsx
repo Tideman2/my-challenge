@@ -10,7 +10,9 @@ import {
 import { useState } from "react"
 
 
-let LoginLabel = styled(FormLabel)(({labelColor}) => {
+let LoginLabel = styled(FormLabel, {
+  shouldForwardProp: (prop) => prop !== "labelColor" // <- filter it
+})(({labelColor}) => {
   return {
     fontWeight: 600, // Adjust font weight for all FormLabel components
     fontSize: 13,

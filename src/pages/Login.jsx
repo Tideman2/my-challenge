@@ -1,5 +1,5 @@
 //gh GH "" || @
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
   Card,
   CardContent,
@@ -27,12 +27,45 @@ let LoginCard = styled(Card)(({ theme }) => {
   };
 });
 
-
 export default function Login() {
   let [emailErrorMessage, setEmailErrorMessage] = useState(``);
   let [passWordErrorMessage, setPasswordErrorMesssage] = useState(``);
   const dispatch = useDispatch();
   const fetcher = useFetcher();
+  const adminData = useSelector((state) => state.adminState);
+  console.log(adminData);
+  useEffect(() => {
+    // Get user data from localStorage
+    let userDatas = localStorage.getItem("userData");
+    let users = userDatas ? JSON.parse(userDatas) : [];
+    console.log(userDatas);
+    function initAdminInLocal() {
+      let adminUser = {
+        name: "admin",
+        ...adminData,
+      };
+      users.push(adminUser);
+      console.log(users);
+      localStorage.setItem("userData", JSON.stringify(users));
+    }
+
+    //check if there is any user
+    if (users.length > 0) {
+      let thereIsAdmin = false;
+      for (let i = 0; i < users.length; i++) {
+        if (users[i].name === "admin") {
+          thereIsAdmin = true;
+          break;
+        }
+      }
+      //check if admin is not there
+      if (!thereIsAdmin) {
+        initAdminInLocal();
+      }
+    } else {
+      initAdminInLocal();
+    }
+  }, [adminData]);
 
   //user email from redux store
   let userEmail = useSelector((state) => {
@@ -50,7 +83,6 @@ export default function Login() {
     console.log(email);
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (email.length === 0) {
-      // setEmailError(true); 
       setEmailErrorMessage(`Input must not be empty`);
       return false; // if it isnt validated
     } else if (!emailRegex.test(email)) {
@@ -64,7 +96,7 @@ export default function Login() {
   function validatePassword() {
     let pass = userPassword;
     console.log(pass);
-    if (pass.length === 0) { 
+    if (pass.length === 0) {
       setPasswordErrorMesssage(`Input must not be empty`);
       return false; // if it isnt validated
     } else if (pass.length <= 7) {
@@ -90,9 +122,14 @@ export default function Login() {
   return (
     <LoginCard>
       <CardContent>
-        <Typography variant="h1" sx= {{
-          mb: 2
-        }}>Log into your account</Typography>
+        <Typography
+          variant="h1"
+          sx={{
+            mb: 2,
+          }}
+        >
+          Log into your account
+        </Typography>
         <Form onSubmit={handleSubmit}>
           <Box
             sx={{
@@ -109,7 +146,7 @@ export default function Login() {
               name="email"
               error={emailErrorMessage}
               onChange={(e) => {
-                setEmailErrorMessage("")
+                setEmailErrorMessage("");
                 dispatch(updateEmail({ email: e.target.value }));
               }}
             />
@@ -119,7 +156,7 @@ export default function Login() {
               type={`password`}
               name="password"
               onChange={(e) => {
-                setPasswordErrorMesssage("")
+                setPasswordErrorMesssage("");
                 dispatch(updatePassword({ password: e.target.value }));
               }}
               label={`Password`}
@@ -179,21 +216,28 @@ export default function Login() {
 
 //route action to simulate user login
 export async function loginAction({ request }) {
+  console.log("aaaaaaahhhhhhhhhhhh");
   let formData = await request.formData();
   let enteredEmail = formData.get("email");
   let enteredPassword = formData.get("password");
+  console.log(enteredEmail, enteredPassword);
+  let nameOfLoggedInUser = null;
   let hasAccount = false;
 
   // Get user data from localStorage
   let userDatas = localStorage.getItem("userData");
   let users = userDatas ? JSON.parse(userDatas) : []; // Ensure it's an array
 
-  console.log(users);
+  console.log(users, "we got here");
 
   // Check if user exists
-  for (let { email, password } of users) {
-    if (email === enteredEmail && password === enteredPassword) {
+  for (let { emailAddress, password, name } of users) {
+    if (
+      emailAddress.trim().toLowerCase() === enteredEmail.trim().toLowerCase() &&
+      password === enteredPassword
+    ) { 
       hasAccount = true;
+      nameOfLoggedInUser = name;
       break;
     }
   }
@@ -201,10 +245,10 @@ export async function loginAction({ request }) {
   localStorage.setItem(`userData`, JSON.stringify(users));
 
   if (hasAccount) {
-    alert("Successfully logged in");
+    alert(`Successfully logged in as ${nameOfLoggedInUser}`);
     return redirect("/dashboard");
   } else {
-    alert(`Account does not exist, create one`);
-    return redirect("/collaborate");
+    alert(`Account does not exist, you need to be invited`);
+    return null;
   }
 }
