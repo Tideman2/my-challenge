@@ -1,8 +1,11 @@
 import { Dialog, styled, Box, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import LogOutIcon from "../../../../assets/svgs/LogOutIcon";
 import TimesIcon from "../../../../assets/svgs/TimesIcon";
 import CustomBlueButton from "../../../CustomBlueButton";
+import { unautenticate } from "../../../../reduxStore/features/auth";
 
 let BackIconWrapper = styled(Box)(() => {
   return {
@@ -78,6 +81,8 @@ let BtnBox = styled(Box)(() => {
 });
 
 export default function LogoutComp({ isModalOpen, setModalState }) {
+  let navigate = useNavigate();
+  let dispatch = useDispatch();
   function onModalClose() {
     setModalState(false);
   }
@@ -124,6 +129,11 @@ export default function LogoutComp({ isModalOpen, setModalState }) {
             width={"344px"}
             height={"48px"}
             sx={{ backgroundColor: "#D24339", borderRadius: "4px" }}
+            onClick={() => {
+              console.log("Log out");
+              dispatch(unautenticate());
+              navigate("/login");
+            }}
           >
             Yes, logout
           </CustomBlueButton>
@@ -135,6 +145,9 @@ export default function LogoutComp({ isModalOpen, setModalState }) {
               borderRadius: "4px",
               color: "#2D75B6",
               border: "1px solid #2D75B6",
+            }}
+            onClick={() => {
+              setModalState(false);
             }}
           >
             No, cancle

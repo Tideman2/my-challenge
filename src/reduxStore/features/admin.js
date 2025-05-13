@@ -1,20 +1,17 @@
-
 import { createSlice } from "@reduxjs/toolkit";
 
 let admin = createSlice({
-    name: "admin",
-    initialState: {
-        emailAddress: "admin@gmail.com",
-        password: "12345678",
-        isLoggedIn: false
+  name: "admin",
+  initialState: {
+    emailAddress: "admin@gmail.com",
+    password: "12345678",
+  },
+  reducers: {
+    logIn(state) {
+      state.isLoggedIn = true;
     },
-    reducers: {
-        logIn(state) {
-          state.isLoggedIn = true;
-        }
-      }
-})
+  },
+});
 
 export const { logIn } = admin.actions;
-export default admin.reducer
-
+export default admin.reducer;

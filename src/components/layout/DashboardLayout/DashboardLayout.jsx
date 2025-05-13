@@ -1,7 +1,8 @@
 import { Box, Drawer, Container, Typography, styled } from "@mui/material";
-import { Outlet } from "react-router-dom";
-import { useState } from "react";
+import { Outlet, useLocation, useNavigate } from "react-router-dom";
+import { useState, useEffect } from "react";
 import GridViewIcon from "@mui/icons-material/GridView";
+import { useSelector, useDispatch } from "react-redux";
 
 import TopLogo from "../../../assets/svgs/TopLogo";
 import NavLinks from "./components/NavLinks";
@@ -15,6 +16,7 @@ import DropDownArrowIcon from "../../../assets/svgs/DropDownArrowIcon";
 import HrLine from "../../../assets/svgs/HrLine";
 import PersonalCard from "../../../assets/svgs/PersonalCard";
 import LogoutComp from "./components/LogoutComp";
+import { unautenticate } from "../../../reduxStore/features/auth";
 
 const NavLinkDrawer = styled(Drawer)({
   flexShrink: 0,
@@ -26,7 +28,7 @@ const NavLinkDrawer = styled(Drawer)({
     flexDirection: "column",
     paddingTop: "30px",
     overflow: "hidden",
-    border: "none"
+    border: "none",
   },
 });
 
@@ -74,18 +76,35 @@ const AdminIconBox = styled(Box)(() => {
 });
 
 const Content = styled(Container)(() => {
-
   return {
     padding: "24px",
     margin: "0px !important",
     boxSizing: "border-box",
     width: "100%",
     maxWidth: "none",
-  }
-})
+  };
+});
 
 export default function DashboardLayout() {
+  const navigate = useNavigate();
+  const location = useLocation();
+  let dispatch = useDispatch();
+  //We will be using the pathname as a useEffect dependency to check if the user is authorized
+  //on all paths on the dashBoard Route
   let [logoutModal, setLogoutModal] = useState(false);
+  let isAuth = useSelector((state) => state.auth.isAutenticated);
+
+  useEffect(() => {
+    if (isAuth) {
+      console.log(isAuth, "Allowed entry");
+    } else if (!isAuth) {
+      if (localStorage.getItem("isAuthenticated")) {
+        return;
+      }
+      console.log(isAuth, "Go back!");
+      navigate("/login");
+    }
+  }, [location, isAuth, navigate]);
 
   return (
     <Box
@@ -132,9 +151,7 @@ export default function DashboardLayout() {
               title="Businesses"
             />
             <NavLinks
-              icon={
-                <PersonalCard />
-              }
+              icon={<PersonalCard />}
               path={"/dashBoard/administration"}
               title="Administration"
               menuItems={[
@@ -157,24 +174,23 @@ export default function DashboardLayout() {
         </NavLinksBox>
         <HrLine style={{ width: "100%" }} />
         <NavLinksBox sx={{ mt: "10px", gap: "10px" }}>
-            <NavLinks
-              icon={
-                <LinkIconBox>
-                  <SettiingsIcon />
-                </LinkIconBox>
-              }
-              path={"/dashBoard/setting"}
-              title={"Settings"}
-            />
-            <NavLinks
-              icon={<LogOutIcon />}
-              path={"dashBoard/activity-log"}
-              title={"Logout"}
-              onClick={() => {
-                console.log("loged out");
-                setLogoutModal(true)
-              }}
-            />
+          <NavLinks
+            icon={
+              <LinkIconBox>
+                <SettiingsIcon />
+              </LinkIconBox>
+            }
+            path={"/dashBoard/setting"}
+            title={"Settings"}
+          />
+          <NavLinks
+            icon={<LogOutIcon />}
+            path={"dashBoard/activity-log"}
+            title={"Logout"}
+            onClick={() => {
+              setLogoutModal(true);
+            }}
+          />
         </NavLinksBox>
       </NavLinkDrawer>
 
@@ -195,7 +211,7 @@ export default function DashboardLayout() {
             gap={"10px"}
           >
             <AdminNameIcon style={{ width: "32px", height: "32px" }} />
-            <Box sx={{ display: "flex", alignItems: "center", gap: "10px"}}>
+            <Box sx={{ display: "flex", alignItems: "center", gap: "10px" }}>
               <Typography width={"fit-content"} height={"18px"}>
                 Admin Name
               </Typography>
@@ -206,11 +222,11 @@ export default function DashboardLayout() {
           </Box>
         </AdminIconBox>
         <Content>
-        <Outlet />
+          <Outlet />
         </Content>
       </Box>
       {/* log out modal */}
-      <LogoutComp isModalOpen={logoutModal} setModalState={setLogoutModal}/>
+      <LogoutComp isModalOpen={logoutModal} setModalState={setLogoutModal} />
     </Box>
   );
 }

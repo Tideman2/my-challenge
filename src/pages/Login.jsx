@@ -9,9 +9,11 @@ import {
   styled,
 } from "@mui/material";
 import { Link, Form, redirect, useFetcher } from "react-router-dom";
-
 import { useSelector, useDispatch } from "react-redux";
+import store from "../reduxStore/store";
+
 import { updateEmail, updatePassword } from "../reduxStore/features/auth";
+import { autenticate } from "../reduxStore/features/auth";
 import InputComponent from "../components/InputComponent";
 
 let LoginCard = styled(Card)(({ theme }) => {
@@ -33,12 +35,10 @@ export default function Login() {
   const dispatch = useDispatch();
   const fetcher = useFetcher();
   const adminData = useSelector((state) => state.adminState);
-  console.log(adminData);
   useEffect(() => {
     // Get user data from localStorage
     let userDatas = localStorage.getItem("userData");
     let users = userDatas ? JSON.parse(userDatas) : [];
-    console.log(userDatas);
     function initAdminInLocal() {
       let adminUser = {
         name: "admin",
@@ -216,7 +216,6 @@ export default function Login() {
 
 //route action to simulate user login
 export async function loginAction({ request }) {
-  console.log("aaaaaaahhhhhhhhhhhh");
   let formData = await request.formData();
   let enteredEmail = formData.get("email");
   let enteredPassword = formData.get("password");
@@ -228,16 +227,17 @@ export async function loginAction({ request }) {
   let userDatas = localStorage.getItem("userData");
   let users = userDatas ? JSON.parse(userDatas) : []; // Ensure it's an array
 
-  console.log(users, "we got here");
-
   // Check if user exists
   for (let { emailAddress, password, name } of users) {
     if (
       emailAddress.trim().toLowerCase() === enteredEmail.trim().toLowerCase() &&
       password === enteredPassword
-    ) { 
+    ) {
       hasAccount = true;
       nameOfLoggedInUser = name;
+      //We useb redux imported store here to set the isAutenticated to true
+      console.log(store.dispatch(autenticate()));
+      console.log(store.getState());
       break;
     }
   }
