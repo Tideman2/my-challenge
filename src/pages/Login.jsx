@@ -13,7 +13,7 @@ import { useSelector, useDispatch } from "react-redux";
 import store from "../reduxStore/store";
 
 import { updateEmail, updatePassword } from "../reduxStore/features/auth";
-import { autenticate } from "../reduxStore/features/auth";
+import { autenticate, unautenticate } from "../reduxStore/features/auth";
 import InputComponent from "../components/InputComponent";
 
 let LoginCard = styled(Card)(({ theme }) => {
@@ -66,6 +66,13 @@ export default function Login() {
       initAdminInLocal();
     }
   }, [adminData]);
+
+  //Useeffect to handle quth logic and protect dashBoard route
+  useEffect(() => {
+    if (localStorage.getItem("isAuthenticated")) {
+      dispatch(unautenticate());
+    }
+  }, [dispatch]);
 
   //user email from redux store
   let userEmail = useSelector((state) => {
