@@ -10,7 +10,7 @@ let TextBox = styled(Box)(() => {
     paddingTop: "4px",
     paddingBottom: "4px",
     backgroundColor: "white",
-    boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.05)", 
+    boxShadow: "0px 2px 8px rgba(0, 0, 0, 0.05)",
     borderRadius: "5px",
     zIndex: 10,
   };
@@ -20,24 +20,26 @@ let TextBox = styled(Box)(() => {
 export default function MoreDetails(props) {
   return (
     <TextBox {...props}>
-        <Box sx={{
-            width: "100%",
-            backgroundColor: "#F9FAFA",
-            height: "100%",
-            borderRadius: "5px",
-            paddingLeft: "8px",
-            boxSizing: "border-box",
-        }}>
-      <Typography
-        variant="P"
+      <Box
         sx={{
-          fontSize: "13px",
-          color:  "#1A1C1F",
-          padding: "8px"
+          width: "100%",
+          backgroundColor: "#F9FAFA",
+          height: "100%",
+          borderRadius: "5px",
+          paddingLeft: "8px",
+          boxSizing: "border-box",
         }}
       >
-        More details
-      </Typography>
+        <Typography
+          variant="P"
+          sx={{
+            fontSize: "13px",
+            color: "#1A1C1F",
+            padding: "8px",
+          }}
+        >
+          More details
+        </Typography>
       </Box>
     </TextBox>
   );

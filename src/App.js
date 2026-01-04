@@ -1,4 +1,3 @@
-import React from "react";
 import {
   createBrowserRouter,
   RouterProvider,
@@ -50,8 +49,14 @@ const routes = [
         path: "/dashBoard/administration",
         element: <Administration />,
         children: [
-        { path: "/dashBoard/administration/team-mates", element: <TeamMates />},
-        { path: "/dashBoard/administration/roles-and-privileges", element: <RolesAndPrivileges /> }
+          {
+            path: "/dashBoard/administration/team-mates",
+            element: <TeamMates />,
+          },
+          {
+            path: "/dashBoard/administration/roles-and-privileges",
+            element: <RolesAndPrivileges />,
+          },
         ],
       },
       { path: "/dashBoard/activity-log", element: <ActivityLog /> },
